@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:37 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/20 21:03:25 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:11:04 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,24 @@ size_t	ft_strlen(const char *s)
 	while (s[i] != '\0')
 		i++;
 	return (i);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	size_t	i;
+	char	*return_ptr;
+
+	len = ft_strlen(s1);
+	return_ptr = (char *)malloc((sizeof(char) * len) + 1);
+	if (return_ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		return_ptr[i] = s1[i];
+		i++;
+	}
+	return_ptr[i] = '\0';
+	return (return_ptr);
 }

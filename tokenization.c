@@ -6,13 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/24 18:18:21 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:00:06 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char *change_env(char *str);
 
 int	tokenization(char *str, t_token_list **head)
 {
@@ -26,6 +24,7 @@ int	tokenization(char *str, t_token_list **head)
 		if (i == FAIL)
 		{
 			printf("fail\n");
+			list_free(head);
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -37,30 +36,29 @@ int	make_token(char *str, int start, t_token_list **head)
 {
 	int		i;
 	int		flag;
-	char	*re_str;
+	char	q;
 
 	flag = OFF;
-	if (str[start] == '\'' || str[start] == '\"')
+	if (quotation_check(str) == FAIL)
+		return (FAIL);
+	q = str[start];
+	if (q == '\'' || q == '\"')
 		flag = ON;
 	i = start + 1;
-	while (1)
+	while (!((str[i] == ' ' || str[i] == '\0') && flag == OFF))
 	{
-		if ((str[i] == ' ' || str[i] == '\0') && flag == OFF)
-			break ;
-		if ((str[i] == '\"' || str[i] == '\'') && flag == ON)
+		if ((str[i] == q) && flag == ON)
 			flag = OFF;
 		else if ((str[i] == '\"' || str[i] == '\'') && flag == OFF)
+		{
 			flag = ON;
+			q = str[i];
+		}
 		i++;
 	}
-	re_str = ft_substr(str, start, i - start);
-	// printf("restr[%d] :%s\n",ft_strlen(re_str) ,re_str);
-	// change_env(re_str);
-	// re_str = delete_q(re_str); // 고쳐야함  "a"b'c' => abc
-	if (re_str == NULL)
-		exit(EXIT_FAILURE);
-	input_token(re_str, head);
-	return (i);
+	if (str_to_token(str, start, i, head) == FAIL)
+		return (FAIL);
+	return (i - 1);
 }
 
 int	input_token(char *str, t_token_list **head)
@@ -70,61 +68,64 @@ int	input_token(char *str, t_token_list **head)
 
 	new = (t_token_list *)malloc(sizeof(t_token_list) * 1);
 	new->token = str;
+	new->next = NULL;
 	if ((*head) == NULL)
 	{
 		(*head) = new;
-		new->next = NULL;
 	}
 	else
 	{
 		temp = (*head);
 		while (temp->next != NULL)
+		{
 			temp = temp->next;
+		}
 		temp->next = new;
-		new->next = NULL;
 	}
 	return (SUCCESS);
 }
-// char *change_env(char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		flag;
-// 	char	*temp_str;
-// 	char	*env_str;
 
-// 	i = 0;
-// 	flag = ON;
-// 	if (str[i] != '\0')
-// 	{
-// 		if (str[i] == '\'')
-// 		{
-// 			flag = OFF;
-// 			i++;
-// 		}
-// 		if (str[i] == '$' && flag == ON)
-// 		{
-// 			j = 0;
-// 			while (str[i + j] != ' ')
-// 				j++;
-// 			if (j != 1)
-// 			{
-// 				temp_str = ft_substr(str, i + 1, j - 1);
-// 				env_str = getenv(temp_str);
-// 				if (env_str == NULL)
-// 					remove_str(str, i, j - 1);
-// 			}
-			
-// 		}
-// 	}
+int	quotation_check(char *str)
+{
+	int		i;
+	int		count;
+	char	q;
 
-// 	return (temp_str);
-// }
+	i = 0;
+	q = ' ';
+	while (str[i] != '\0')
+	{
+		if (q == ' ' && (str[i] == '\'' || str[i] == '\"'))
+		{
+			q = str[i];
+		}
+		else if (str[i] == q)
+		{
+			q = ' ';
+		}
+		i++;
+	}
+	if (q == ' ')
+		return (SUCCESS);
+	else
+	{
+		printf("syntax error\n");
+		return (FAIL);
+	}
+}
 
-// char	*remove_str(char *str, int start, int len)
-// {
-// 	char	*re_str;
-// 	int		i;
+int	str_to_token(char *str, int start, int i, t_token_list **head)
+{
+	char	*re_str;
 
-// 	re_str = (char *)malloc(sizeof(char) * (ft_strlen(str) - len + 1));
-// }
+	re_str = ft_substr(str, start, i - start);
+	if (re_str == NULL)
+	{
+		printf("malloc error\n");
+		return (FAIL);
+	}
+	re_str = change_env(re_str);
+	re_str = delete_q(re_str);
+	input_token(re_str, head);
+	return (SUCCESS);
+}
