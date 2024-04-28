@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:39:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/26 00:43:00 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/04/28 21:17:21 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ char	*change_str(char *str, int start, char *change_str, int len)
 		re_str[i] = str[i];
 		i++;
 	}
-	change_str1(str, re_str, change_str, start);
+	change_str1(str, re_str, change_str, start, len);
 	free(str);
 	return (re_str);
 }
 
-void	change_str1(char *str, char *re_str, char *change_str, int start)
+void	change_str1(char *str, char *re_str, char *change_str, int start, int len)
 {
 	int	i;
 	int	j;
@@ -79,7 +79,7 @@ void	change_str1(char *str, char *re_str, char *change_str, int start)
 		j++;
 		i++;
 	}
-	i = start + j;
+	i = start + len;
 	while (str[i] != '\0')
 	{
 		re_str[j] = str[i];
