@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/28 21:17:20 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:59:37 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ enum	e_type
 	IN_D2_ARG,
 	OUT_D1_ARG,
 	OUT_D2_ARG,
-	IN_OPEN,
-	OUT_OPEN,
-	WRONG_TYPE
+	IN_OPEN_D1,
+	IN_OPEN_D2,
+	OUT_OPEN_D1,
+	OUT_OPEN_D2,
+	WRONG_TYPE,
+	// 개행 뒤에 온 모든 것을 하나의 토큰화 
+	END
 };
 typedef struct s_token_list{
 	int					type;
@@ -57,6 +61,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		is_space(char c);
 
 char	*change_env(char *str);
 int		change_env_flag(char c, int *flag);

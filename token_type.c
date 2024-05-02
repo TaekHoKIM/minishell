@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/28 21:23:56 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:02:15 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	input_type(t_token_list **head)
 	now = (*head);
 	while (now != NULL)
 	{
-		if (ft_strncmp(now->token, "|", 2) == SUCCESS)
+		if (now->type == END)
+			now->type = END;
+		else if (ft_strncmp(now->token, "|", 2) == SUCCESS)
 			now->type = PIPE;
 		else if (ft_strncmp(now->token, "||", 3) == SUCCESS)
 			now->type = WRONG_TYPE;
@@ -47,7 +49,7 @@ int	input_type(t_token_list **head)
 			now->type = OUT_D1;
 		else if (ft_strncmp(now->token, ">>", 3) == SUCCESS)
 			now->type = OUT_D2;
-		else if (pre_type == NONE || pre_type == PIPE)
+		else if (pre_type == NONE || pre_type == PIPE || pre_type == END)
 			now->type = ARG;
 		else if (pre_type == ARG)
 			now->type = ARG;
@@ -118,18 +120,38 @@ int	check_open_redi(t_token_list **head)
 		else if (now->type == PIPE)
 		{
 			if (in_temp != NULL)
-				in_temp->type = IN_OPEN;
+			{
+				if (in_temp->type == IN_D1_ARG)
+					in_temp->type = IN_OPEN_D1;
+				else if (in_temp->type == IN_D2_ARG)
+					in_temp->type = IN_OPEN_D2;
+			}
 			if (out_temp != NULL)
-				out_temp->type = OUT_OPEN;
+			{
+				if (out_temp->type == OUT_D1_ARG)
+					out_temp->type = OUT_OPEN_D1;
+				else if (out_temp->type == OUT_D2_ARG)
+					out_temp->type = OUT_OPEN_D2;
+			}
 			in_temp = NULL;
 			out_temp = NULL;
 		}
 		now = now->next;
 	}
 	if (in_temp != NULL)
-		in_temp->type = IN_OPEN;
+	{
+		if (in_temp->type == IN_D1_ARG)
+			in_temp->type = IN_OPEN_D1;
+		else if (in_temp->type == IN_D2_ARG)
+			in_temp->type = IN_OPEN_D2;
+	}
 	if (out_temp != NULL)
-		out_temp->type = OUT_OPEN;
+	{
+		if (out_temp->type == OUT_D1_ARG)
+			out_temp->type = OUT_OPEN_D1;
+		else if (out_temp->type == OUT_D2_ARG)
+			out_temp->type = OUT_OPEN_D2;
+	}
 	return (SUCCESS);
 }
 
@@ -144,7 +166,7 @@ int	check_cmd(t_token_list **head)
 	{
 		if (temp == NULL && now->type == ARG)
 			temp = now;
-		else if (now->type == PIPE)
+		else if (now->type == PIPE || now->type == END)
 		{
 			if (temp != NULL)
 				temp->type = CMD;

@@ -12,8 +12,8 @@ int main()
 	{
 		str = readline("minishell :");
 		head = NULL;
-		tokenization(str, &head); // 토큰화 된거 - 이거 아직 ""/'' 제거 처리를 안해줌
-		display_list(&head); // 토큰화 된거 보여줌
+		tokenization(str, &head);
+		display_list(&head);
 	}
 	return (0);
 }
@@ -60,12 +60,18 @@ void	type_print(t_token_list *now)
 		printf(" : TYPE[OUT_D1_ARG]\n");
 	else if (type == OUT_D2_ARG)
 		printf(" : TYPE[OUT_D2_ARG]\n");
-	else if (type == IN_OPEN)
-		printf(" : TYPE[IN_OPEN]\n");
-	else if (type == OUT_OPEN)
-		printf(" : TYPE[OUT_OPEN]\n");
+	else if (type == IN_OPEN_D1)
+		printf(" : TYPE[IN_OPEN_D1]\n");
+	else if (type == IN_OPEN_D2)
+		printf(" : TYPE[IN_OPEN_D2]\n");
+	else if (type == OUT_OPEN_D1)
+		printf(" : TYPE[OUT_OPEN_D1]\n");
+	else if (type == OUT_OPEN_D2)
+		printf(" : TYPE[OUT_OPEN_D2]\n");
 	else if (type == WRONG_TYPE)
 		printf(" : TYPE[WRONG_TYPE]\n");
+	else if (type == END)
+		printf(" : TYPE[END]\n");
 }
 
 void	list_free(t_token_list **head)

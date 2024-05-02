@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:37 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/04/28 15:56:57 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:07:22 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,13 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	else if (temp1[i] < temp2[i])
 		return (-1);
 	return (0);
+}
+
+int	is_space(char c)
+{
+	if (c == ' ' || c == '\v' || c == '\f')
+		return (SUCCESS);
+	else if (c == '\r' || c == '\n' || c == '\t')
+		return (SUCCESS);
+	return (FAIL);
 }
