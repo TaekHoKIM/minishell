@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 14:59:37 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:21:54 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,43 +53,61 @@ typedef struct s_token_list{
 	struct s_token_list	*next;
 }t_token_list;
 
+// main
 void	display_list(t_token_list **head);
 void	list_free(t_token_list **head);
+void	type_print(t_token_list *now);
+void	list_free(t_token_list **head);
 
-
+// ft_str
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		is_space(char c);
 
+// ft_sub
+char	*ft_lowercasing(char *cmd);
+
+// make_token
+int		make_token(char *str, int start, t_token_list **head);
+int		make_token_sub(char *str, int start, t_token_list **head);
+int		str_to_token(char *str, int start, int i, t_token_list **head);
+int		input_token(char *str, t_token_list **head);
+
+// change_env
 char	*change_env(char *str);
 int		change_env_flag(char c, int *flag);
 char	*change_env_sub(char *str, int	*index);
 int		check_special_char(char *restr, int i);
 int		change_env_sub1(char **restr, char *temp_str, int i, int j);
 
+// change_env_sub
 char	*remove_str(char *str, int start, int len);
 char	*change_str(char *str, int start, char *change_str, int len);
 void	change_str1(char *str, char *re_str, char *change_str, int start, int len);
 
+// delete_quotation
 char	*delete_q(char *restr);
 char	*delete_q_helper(char *restr, char q, int *s);
 void	delete_q_helper1(char *str, char *restr, char q, int j);
 
+// tokenization
 int		tokenization(char *str, t_token_list **head);
-int		make_token(char *str, int start, t_token_list **head);
-int		input_token(char *str, t_token_list **head);
-int		quotation_check(char *str);
-int		str_to_token(char *str, int start, int i, t_token_list **head);
 int		token_change(t_token_list **head);
+int		last_token_input(t_token_list **head);
 
-
+// token_type
 int		input_type(t_token_list **head);
 int		token_typing(t_token_list **head);
 int		syntax_check_type(t_token_list **head);
 int		check_open_redi(t_token_list **head);
 int		check_cmd(t_token_list **head);
+int		cmd_to_lowercase(t_token_list **head);
 
+// token_check
+int		quotation_check(char *str);
+int		is_space(char c);
 
+// echo/echo.c
+int		echo(char **argv);
 #endif
