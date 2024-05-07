@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 21:30:52 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:34:01 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@
 
 // tcsetattr함수로 ^C가 출력되지 않게 하기
 
-int	do_nothing(void)
-{
-	return (NONE);
-}
-
 // arg 개수 세고
 // < access, last in redirection index save
 // > open, acess, last out redirection index save
@@ -48,50 +43,27 @@ int	do_nothing(void)
 // >> open option change
 // bash에서 history명령어에 대해서, 내가 구현해야하는가?, 구현되어있는가?
 
-// void	access_check(t_token_list *head, t_envp *ev)
-// {
-// 	t_token_list	*tmp;
-
-// 	tmp = head;
-// 	while (tmp != NULL)
-// 	{
-// 		if (tmp->type == CMD)
-// 			access()
-// 	}
-// }
-
 // $? 애초에 $는 전부 환경변수로 치환이 된다. $?는 특별하게 치환이 된다고 한다.
 // 처음에는 0으로 초기화가 돼있다. 전에 실행했던 명령어의 종료 값을 출력한다고 한다.
 // 그럼 치환부분을 어떻게 구현해야하는거지? 
 // 파이프엑스를 가지고 와서 그냥 파일 부분들을 변경, 명령어마다 파일을 구분 지어서 해줘야 함.
 
-static int	here_doc_preprocessor(t_token_list *head, t_info *info)
+static void	minishell_initial_settings(t_envp **env, t_info *info, char **envp)
 {
-	char	*tmp;
-	char	*filename;
-
+	info->argv = NULL;
+	info->cmd_cnt = 0;
+	info->envp = NULL;
 	info->here_doc_cnt = 0;
-	while (head != NULL)
-	{
-		if (head->type == IN_D2_ARG)
-			fake_here_doc(head->token);
-		if (head->type == IN_OPEN_D2)
-		{
-			info->here_doc_cnt++;
-			tmp = ft_itoa(info->here_doc_cnt);
-			filename = ft_strjoin(".temp", tmp);
-			free(tmp);	
-			if (here_doc(filename, head->token) == FAIL)
-			{
-				here_doc_file_unlink(info->here_doc_cnt);
-				return (FAIL);
-			}
-			free(head->token);
-			head->token = filename;
-		}
-		head = head->next;
-	}
-	return (SUCCESS);
+	info->i_fd = STDIN_FILENO;
+	info->o_fd = STDOUT_FILENO;
+	info->path = NULL;
+	info->pid = NULL;
+	info->pipe_cnt = 0;
+	info->pipefd = NULL;
+	info->exit_code = 0;
+	set_terminal_not_print();
+	set_parent_signal();
+	set_envp(env, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -101,38 +73,21 @@ int	main(int argc, char **argv, char **envp)
 	t_envp			*env;
 	t_info			info;
 
-	set_terminal_not_print();
-	set_parent_signal();
-	set_envp(&env, envp);
-	rl_event_hook = do_nothing;
+	minishell_initial_settings(&env, &info, envp);
 	while (1)
 	{
 		line = readline("minishell % ");
 		if (line == NULL)
-		{
-			write(STDOUT_FILENO, "\x1b[1Aexit\n", 8);
-			exit(EXIT_SUCCESS);
-		}
+			ctrl_d_print_exit();
 		add_history(line);
 		tokenization(line, &head);
-		if (here_doc_preprocessor(head, &info) == FAIL)
-			continue ;
+		if (here_doc_preprocessor(head, &info) != FAIL)
+			info.exit_code = exec_process(head, env, &info);
+		else
+			info.exit_code = EXIT_FAILURE;
+		t_token_list_free(&head);
 		here_doc_file_unlink(info.here_doc_cnt);
-		display_list(&head);
-		// access_check(head);
-		t_token_list_free(head);
-		free(line);
-		// if (pid == 0)
-		// {
-		// 	signal(SIGINT, SIG_DFL);
-		// }
-		// else
-		// {
-		// 	signal(SIGINT, SIG_IGN);
-		// }
-		// last wait_pid;
-		// 다 진행하고 signal(SIGINT, ctrl_c);
-		// printf("%s\n", line);
+		info_terminal_signal_reset(&info);
 	}
 	exit(EXIT_SUCCESS);
 }
