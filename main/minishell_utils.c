@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 21:15:21 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:29:45 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,38 @@ void	*ft_malloc(size_t size, size_t cnt)
 	return (tmp);
 }
 
-void	t_token_list_free(t_token_list *head)
+int	ft_perror(char *str)
 {
-	t_token_list	*tmp;
-	
-	while (head != NULL)
-	{
-		tmp = head->next;
-		free(head->token);
-		free(head);
-		head = tmp;
-	}
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	perror(str);
+	return (FAIL);
 }
 
-void	set_envp(t_envp **env, char **envp)
+void	ctrl_d_print_exit()
 {
-	t_envp	*new;
-	t_envp	*tmp;
-	int		i;
+	ft_putstr_fd("\033[1A", STDOUT_FILENO); // 현재 커서의 위치를 한칸 위로 올려줌 
+	ft_putstr_fd("\033[12C", STDOUT_FILENO); // 현재 커서의 위치를 12번째칸으로 이동
+	ft_putstr_fd("exit\n", STDOUT_FILENO); // exit를 출력
+	exit(EXIT_SUCCESS);
+}
 
-	i = 0;
-	while(envp[i] != NULL)
-	{
-		new = ft_malloc(sizeof(tmp), 1);
-		new->line = ft_strdup(envp[i]);
-		if (i == 0)
-			*env = new;
-		else
-		{
-			tmp = *env;
-			while ((tmp)->next != NULL)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-		i++;
-	}
+void	info_terminal_signal_reset(t_info *info)
+{
+	array_2d_free((void **)info->argv);
+	info->argv = NULL;
+	info->cmd_cnt = 0;
+	array_2d_free((void **)info->envp);
+	info->envp = NULL;
+	info->here_doc_cnt = 0;
+	info->i_fd = STDIN_FILENO;
+	info->o_fd = STDOUT_FILENO;
+	array_2d_free((void **)info->path);
+	info->path = NULL;
+	free(info->pid);
+	info->pid = NULL;
+	info->pipe_cnt = 0;
+	array_2d_free((void **)info->pipefd);
+	info->pipefd = NULL;
+	set_terminal_not_print();
+	set_parent_signal();
 }
