@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 16:59:51 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 20:39:56 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:28:35 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len1 = 0;
 	len2 = 0;
 	i = 0;
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
-	if (s1 != NULL)
-		len1 = ft_strlen(s1);
-	if (s2 != NULL)
-		len2 = ft_strlen(s2);
-	tmp = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (tmp == NULL)
-		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	tmp = ft_malloc(sizeof(char), (len1 + len2 + 1));
 	ft_strlcpy(tmp, s1, len1 + 1);
 	ft_strlcat(tmp, s2, len1 + len2 + 1);
 	return (tmp);
