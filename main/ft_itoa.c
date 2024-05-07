@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:01:34 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 20:37:11 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:28:46 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ char	*ft_itoa(int n)
 		cnt++;
 	if (n == 0)
 		return (ft_strdup("0"));
-	temp = (char *)malloc(sizeof(char) * (cnt + 1));
-	if (temp == NULL)
-		return (NULL);
+	temp = ft_malloc(sizeof(char), (cnt + 1));
 	temp[cnt] = '\0';
 	put_digit(temp, (long long)n, cnt);
 	return (temp);
