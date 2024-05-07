@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 19:55:47 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 21:00:55 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:29:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*new_backup(char *line)
 		free(line);
 		return (NULL);
 	}
-	line = (char *)malloc(sizeof(char) * (len - i + 1));
-	if (line == NULL)
-		exit(EXIT_FAILURE);
+	line = ft_malloc(sizeof(char), (len - i + 1));
 	while (i < len)
 		line[j++] = temp[++i];
 	line[j] = '\0';
@@ -51,9 +49,9 @@ char	*line_cut(char *line)
 	while (line[i] != '\n' && line[i] != '\0')
 		i++;
 	if (line[i] == '\0' && i != 0)
-		result = (char *)malloc(sizeof(char) * (i + 1));
+		result = ft_malloc(sizeof(char), (i + 1));
 	else if (line[i] == '\n')
-		result = (char *)malloc(sizeof(char) * (++i + 1));
+		result = ft_malloc(sizeof(char), (++i + 1));
 	else
 		result = NULL;
 	if (result == NULL)

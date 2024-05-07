@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:50:48 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 21:00:51 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:15:01 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	find_enter(char *str)
 
 // 	len = ft_strlen(str);
 // 	i = 0;
-// 	result = malloc(sizeof(char) * len + 1);
-// 	if (result == NULL)
-// 		exit(EXIT_FAILURE);
+// 	result = ft_malloc(sizeof(char), len + 1);
 // 	result[len] = '\0';
 // 	while (str[i] != '\0')
 // 	{
