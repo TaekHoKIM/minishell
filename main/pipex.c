@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 17:25:39 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 22:06:12 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 static int	make_pipe(t_token_list *head, t_info *info)
 {
@@ -35,6 +35,42 @@ static int	make_pipe(t_token_list *head, t_info *info)
 	return (SUCCESS);
 }
 
+// The condition 'fd != dir->__dd_fd' works on Mac but not on Linux. 
+// To make it work on Linux as well,
+// it should be changed to 'fd != *(int *)dir'.
+// This change works because the 
+// file descriptor (fd) is stored in the first 4 bytes.
+// However, this method is quite dangerous.
+// It is said to compromise portability.
+void	close_fd(void)
+{
+	DIR				*dir;
+	struct dirent	*ent;
+	int				fd;
+	
+	dir = opendir("/dev/fd");
+	if (dir == NULL)
+		ft_perror("opendir");
+	ent = readdir(dir);
+	while (ent != NULL)
+	{
+		fd = atoi(ent->d_name);
+		if (fd > STDERR_FILENO && fd != dir->__dd_fd)
+			close(fd);
+		ent = readdir(dir);
+	}
+}
+
+static int	pipex(t_token_list *head, t_envp *envp, t_info *info, int i)
+{
+	info->pid[i] = fork();
+	if (info->pid[i] == FAIL)
+		return (ft_perror("fork"));
+	if (info->pid[i] == 0)
+		child_process(head, envp, info, i);
+	return (SUCCESS);
+}
+
 static int	pipex_initial_settings(t_token_list *head, t_info *info)
 {
 	if (make_pipe(head, info) == FAIL)
@@ -44,45 +80,9 @@ static int	pipex_initial_settings(t_token_list *head, t_info *info)
 	return (SUCCESS);
 }
 
-static void	parent_fd_close(int **pipefd, int i, int cmd_cnt)
-{
-	if (i > 0)
-	{
-		if (close(pipefd[i - 1][0]) == FAIL)
-		{
-			ft_perror("close");
-			return ;
-		}
-	}
-	if (i + 1 < cmd_cnt)
-	{
-		if (close(pipefd[i][1]) == FAIL)
-		{
-			ft_perror("close");
-			return ;
-		}	
-	}
-}
-
-static int	pipex(t_token_list *head, t_envp *envp, t_info *info, int i)
-{
-	if (av_ev_path_file_set(head, envp, info) == FAIL)
-		return (SUCCESS);
-	info->pid[i] = fork();
-	if (info->pid[i] == FAIL)
-		return (ft_perror("fork"));
-	if (info->pid[i] == 0)
-		child_process(info, i);
-	else
-		parent_fd_close(info->pipefd, i, info->pipe_cnt + 1);
-	return (SUCCESS);
-}
-
 int exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
     int     i;
-    // 임시로 만듬
-    int     temp;
     i = 0;
     if (pipex_initial_settings(head, info) == FAIL)
         return (EXIT_FAILURE);
@@ -96,13 +96,7 @@ int exec_process(t_token_list *head, t_envp *envp, t_info *info)
             head = head->next;
         i++;
     }
-    // 임시로 wait 만들어놓음 test 용도 - 위에 temp이랑 같이 만듦
-    temp = 0;
-    while (temp < info->pipe_cnt + 1)
-    {
-        wait(&i);
-        temp++;
-    }
-    // wait_exit(pid, cmd_cnt, pipe_info);
+	close_fd();
+    child_process_wait(info);
     return (SUCCESS);
 }
