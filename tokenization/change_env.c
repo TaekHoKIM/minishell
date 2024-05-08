@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:20:40 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:52:43 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	change_env_sub1(char **restr, char *temp_str, int i, int j)
 	char	*env_str;
 
 	env_str = getenv(temp_str);
+	// 여기에서 getenv가 아니라 다른 거를 사용해야 됨 함수 변환 필요 + 인자로 env list 필요
 	if (env_str != NULL)
 		env_str = ft_strdup(env_str);
+	// 여기까지 고려해서 env 함수 만들기
 	idx = i;
 	if (env_str == NULL)
 	{

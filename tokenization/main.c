@@ -5,16 +5,13 @@ int main()
 {
 	t_token_list	*head;
 	char			*str;
-	char			*echo_set[] = {"echo","-","-n","hello", NULL};
 
-	echo(echo_set);
 	while (1)
 	{
 		str = readline("minishell :");
 		head = NULL;
 		tokenization(str, &head);
 		display_list(&head);
-		
 	}
 	return (0);
 }
@@ -73,21 +70,4 @@ void	type_print(t_token_list *now)
 		printf(" : TYPE[WRONG_TYPE]\n");
 	else if (type == END)
 		printf(" : TYPE[END]\n");
-}
-
-void	list_free(t_token_list **head)
-{
-	t_token_list	*temp;
-	t_token_list	*remove;
-
-	temp = *head;
-	if (temp == NULL)
-		return ;
-	while (temp->next != NULL)
-	{
-		remove = temp;
-		temp = temp->next;
-		free(remove);
-	}
-	return ;
 }

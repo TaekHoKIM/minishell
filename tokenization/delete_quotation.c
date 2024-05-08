@@ -6,12 +6,37 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:20:34 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:52:56 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	token_change(t_token_list **head)
+{
+	char			*re_str;
+	t_token_list	*now;
+
+	now = (*head);
+	if (now == NULL)
+		return (FAIL);
+	while (now != NULL)
+	{
+		if (now->type != END)
+		{
+			re_str = now->token;
+			re_str = change_env(re_str);
+			if (re_str == NULL)
+				return (FAIL);
+			re_str = delete_q(re_str);
+			if (re_str == NULL)
+				return (FAIL);
+			now->token = re_str;
+		}
+		now = now->next;
+	}
+	return (SUCCESS);
+}
 char	*delete_q(char *restr)
 {
 	char	q;

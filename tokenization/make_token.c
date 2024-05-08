@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:56:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:27:33 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:00:18 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,11 @@ int	make_token(char *str, int start, t_token_list **head)
 			return (FAIL);
 		return (i);
 	}
-	i = start + 1;
-	while (str[i] != '\0')
-	{
-		if (str[i] == q && flag == ON)
-			flag = OFF;
-		else if ((str[i] == '\'' || str[i] == '\"') && flag == OFF)
-		{
-			q = str[i];
-			flag = ON;
-		}
-		else if (flag == OFF && is_space(str[i]) == SUCCESS)
-			break ;
-		else if (flag == OFF && (str[i] == '<' || str[i] == '>' || str[i] == '|'))
-		{
-			i--;
-			break ;
-		}
-		i++;
-	}
+	i = make_token_sub1(str, start, q, flag);
 	if (str_to_token(str, start, i, head) == FAIL)
 		return (FAIL);
+	if (str[i] == '<' || str[i] == '>' || str[i] == '|')
+		i--;
 	return (i);
 }
 
@@ -81,6 +65,30 @@ int	make_token_sub(char *str, int start, t_token_list **head)
 	return (FAIL);
 }
 
+int	make_token_sub1(char *str, int start, int q, int flag)
+{
+	int	i;
+
+	i = start + 1;
+	while (str[i] != '\0')
+	{
+		if (str[i] == q && flag == ON)
+			flag = OFF;
+		else if ((str[i] == '\'' || str[i] == '\"') && flag == OFF)
+		{
+			q = str[i];
+			flag = ON;
+		}
+		else if (flag == OFF && is_space(str[i]) == SUCCESS)
+			break ;
+		else if (flag == OFF && ((str[i] == '<' || (str[i] == '>')
+					|| str[i] == '|')))
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 int	str_to_token(char *str, int start, int i, t_token_list **head)
 {
 	char	*re_str;
@@ -88,16 +96,13 @@ int	str_to_token(char *str, int start, int i, t_token_list **head)
 	re_str = ft_substr(str, start, i - start);
 	if (re_str == NULL)
 	{
-		printf("malloc error\n");
 		return (FAIL);
 	}
 	if (input_token(re_str, head) == FAIL)
+	{
+		free(re_str);
 		return (FAIL);
-	// input_type이랑 change가 왜 여기서 실행하지?
-	if (input_type(head) == FAIL)
-		printf("input_type FAIL\n");
-	if (token_change(head) == FAIL)
-		printf("token_change FAIL\n");
+	}
 	return (SUCCESS);
 }
 

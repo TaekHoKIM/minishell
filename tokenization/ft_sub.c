@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:51 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:37:34 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:14:00 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*ft_lowercasing(char *cmd)
 	char	*lower_str;
 
 	len = ft_strlen(cmd);
-	printf("len:%d\n",len);
 	lower_str = (char *)malloc(sizeof(char) * (len + 1));
 	if (lower_str == NULL)
 		return (NULL);

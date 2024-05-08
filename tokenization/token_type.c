@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:42:25 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:18:47 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@
 int	token_typing(t_token_list **head)
 {
 	if (syntax_check_type(head) == FAIL)
-	{
-		printf("syntax_check FAIL\n");
 		return (FAIL);
-	}
 	check_cmd(head);
 	check_open_redi(head);
-	cmd_to_lowercase(head);
 	return (SUCCESS);
 }
 
@@ -177,25 +173,5 @@ int	check_cmd(t_token_list **head)
 	}
 	if (temp != NULL)
 		temp->type = CMD;
-	return (SUCCESS);
-}
-
-int	cmd_to_lowercase(t_token_list **head)
-{
-	t_token_list	*temp;
-	char			*change_str;
-
-	temp = (*head);
-	while (temp != NULL)
-	{
-		if (temp->type == CMD)
-		{
-			change_str = ft_lowercasing(temp->token);
-			if (change_str == NULL)
-				return (FAIL);
-			temp->token = change_str;
-		}
-		temp = temp->next;
-	}
 	return (SUCCESS);
 }

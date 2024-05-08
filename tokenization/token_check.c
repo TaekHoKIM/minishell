@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:03:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:10:06 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:02:42 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,25 @@ int	is_space(char c)
 	else if (c == '\r' || c == '\n' || c == '\t')
 		return (SUCCESS);
 	return (FAIL);
+}
+
+void	list_free(t_token_list **head, char *error_msg)
+{
+	t_token_list	*temp;
+	t_token_list	*remove;
+
+	temp = *head;
+	if (temp == NULL)
+		return ;
+	while (temp->next != NULL)
+	{
+		remove = temp;
+		temp = temp->next;
+		if (remove->token != NULL)
+			free(remove->token);
+		free(remove);
+	}
+	printf("%s", error_msg);
+	(*head) = NULL;
+	return ;
 }

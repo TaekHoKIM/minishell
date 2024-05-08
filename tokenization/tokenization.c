@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:32:53 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:08:25 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ int	tokenization(char *str, t_token_list **head)
 	int		i;
 
 	i = 0;
-	// ",' 확인
 	if (quotation_check(str) == FAIL)
 	{
-		printf("quotation_check_error\n");
+		list_free(head, "quotation_check_error\n");
 		return (FAIL);
 	}
 	while (str[i] != '\0')
@@ -30,8 +29,7 @@ int	tokenization(char *str, t_token_list **head)
 			i = make_token(str, i, head);
 		if (i == FAIL)
 		{
-			printf("make_token_error\n");
-			list_free(head);
+			list_free(head, "make_token_error\n");
 			return (FAIL);
 		}
 		if (str[i] == '\0')
@@ -40,43 +38,31 @@ int	tokenization(char *str, t_token_list **head)
 		{
 			if (last_token_input(head) == FAIL)
 			{
-				printf("last_token_input_error\n");
-				list_free(head);
+				list_free(head, "last_token_input_error\n");
 				return (FAIL);
 			}
 		}
 		i++;
 	}
-	if (token_typing(head) == FAIL)
-	{
-		printf("input_type FAIL\n");
-		return (FAIL);
-	}
-	return (SUCCESS);
+	return (token_check(head));
 }
 
-int	token_change(t_token_list **head)
+int	token_check(t_token_list **head)
 {
-	char			*re_str;
-	t_token_list	*now;
-
-	now = (*head);
-	if (now == NULL)
-		return (FAIL);
-	while (now != NULL)
+	if (input_type(head) == FAIL)
 	{
-		if (now->type != END)
-		{
-			re_str = now->token;
-			re_str = change_env(re_str);
-			if (re_str == NULL)
-				return (FAIL);
-			re_str = delete_q(re_str);
-			if (re_str == NULL)
-				return (FAIL);
-			now->token = re_str;
-		}
-		now = now->next;
+		list_free(head, "input_type FAIL\n");
+		return (FAIL);
+	}
+	if (token_change(head) == FAIL)
+	{
+		list_free(head, "token_change FAIL\n");
+		return (FAIL);
+	}
+	if (token_typing(head) == FAIL)
+	{
+		list_free(head, "token_typing FAIL\n");
+		return (FAIL);
 	}
 	return (SUCCESS);
 }
