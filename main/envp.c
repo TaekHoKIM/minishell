@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:54:10 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:22:00 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:46:53 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 void	set_envp(t_envp **env, char **envp)
 {

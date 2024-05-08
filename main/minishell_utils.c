@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 16:11:44 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 21:09:46 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 void	*ft_malloc(size_t size, size_t cnt)
 {
@@ -55,5 +55,5 @@ void	info_terminal_signal_reset(t_info *info)
 	array_2d_free((void **)info->pipefd);
 	info->pipefd = NULL;
 	set_terminal_not_print();
-	set_parent_signal();
+	bagic_set_parent_signal();
 }

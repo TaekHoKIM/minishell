@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   basic_set_signal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:29:47 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:21:57 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:59:13 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 static void	basic_sigint(int sig)
 {
@@ -21,7 +21,7 @@ static void	basic_sigint(int sig)
 	rl_redisplay();
 }
 
-void	set_parent_signal()
+void	bagic_set_parent_signal()
 {
 	signal(SIGINT, basic_sigint);
 	signal(SIGQUIT, SIG_IGN);
