@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 19:55:47 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/03 19:29:14 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:20:27 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 char	*new_backup(char *line)
 {

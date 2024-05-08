@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   basic_set_signal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:29:47 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/06 17:06:44 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:21:57 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 static void	basic_sigint(int sig)
 {

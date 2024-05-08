@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:30:34 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 20:30:40 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:20:43 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 void	display_list(t_token_list **head)
 {

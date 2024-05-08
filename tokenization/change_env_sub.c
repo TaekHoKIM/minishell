@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:39:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:20:38 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:00 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 char	*remove_str(char *str, int start, int len)
 {

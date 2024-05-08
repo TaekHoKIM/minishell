@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   argv_envp_path_file_set.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/07 20:40:10 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:25:00 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 static int	file_set(t_token_list *head, t_info *info)
 {
@@ -32,32 +32,39 @@ static int	file_set(t_token_list *head, t_info *info)
 	return (SUCCESS);
 }
 
-static void	argv_set(t_token_list *head, t_info *info)
+static void argv_set(t_token_list *head, t_info *info)
 {
-	t_token_list	*tmp;
-	int				i;
-
-	tmp = head;
-	while (tmp != NULL && tmp->type != PIPE)
-	{
-		if (tmp->type == CMD || tmp->type == ARG)
-			info->cmd_cnt++;
-		tmp = tmp->next;
-	}
-	if (info->cmd_cnt == 0)
-		return ;
-	info->argv = ft_malloc(sizeof(char *), info->cmd_cnt + 1);
-	info->argv[info->cmd_cnt] = NULL;
-	i = 0;
-	while (head != NULL && head->type != PIPE)
-	{
-		if (head->type == CMD || head->type == ARG)
-		{
-			info->argv[i] = ft_strdup(head->token);
-			i++;
-		}
-		head = head->next;
-	}
+    t_token_list    *tmp;
+    int             i;
+    tmp = head;
+    while (tmp != NULL && tmp->type != PIPE)
+    {
+        if (tmp->type == CMD || tmp->type == ARG)
+            info->cmd_cnt++;
+        tmp = tmp->next;
+    }
+    if (info->cmd_cnt == 0)
+        return ;
+    info->argv = ft_malloc(sizeof(char *), info->cmd_cnt + 1);
+    info->argv[info->cmd_cnt] = NULL;
+    i = 0;
+    while (head != NULL && head->type != PIPE)
+    {
+        if (head->type == CMD || head->type == ARG)
+        {
+            info->argv[i] = ft_strdup(head->token);
+            i++;
+        }
+        head = head->next;
+    }
+    // 수정 부분 ---------------------------------
+    // --> cmm_cnt에서 빈공간이 생김 - 여기를 null로 초기화 해줌
+    while (i < info->cmd_cnt)
+    {
+        info->argv[i] = NULL;
+        i++;
+    }
+    // ------------------------------------------
 }
 
 static void	envp_set(t_envp *envp, t_info *info)

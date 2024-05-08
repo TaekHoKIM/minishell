@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:28:51 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 14:14:00 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:07 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 char	*ft_lowercasing(char *cmd)
 {

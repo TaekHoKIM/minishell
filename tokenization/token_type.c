@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 23:18:47 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:11 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 //  ||은 오류로 띄움, | 주위 타입이 cmd 이거나 다른 거 여야 함
 int	token_typing(t_token_list **head)

@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:56:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 15:00:18 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:27:16 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 int	make_token(char *str, int start, t_token_list **head)
 {

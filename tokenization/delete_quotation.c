@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 14:52:56 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:05 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 int	token_change(t_token_list **head)
 {

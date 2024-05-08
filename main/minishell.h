@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 17:21:54 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:37:52 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,23 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
+# include <unistd.h>
+# include <fcntl.h>
 
+# define CHILD_PID 0
 # define SUCCESS 0
 # define FAIL -1
 # define ON 1
 # define OFF 2
 # define DQ 3
 # define Q 4
+# define YES_LIMITER 5
+# define NO_LIMITER 6
+# define OPEN_MAX 256
+# define SIGINT_EXIT_CODE 1
+# define NO_CHANGE 7
+# define CMD_NOT_FOUND 127
 
 enum	e_type
 {
@@ -53,11 +63,28 @@ typedef struct s_token_list{
 	struct s_token_list	*next;
 }t_token_list;
 
+typedef struct s_envp{
+	char			*line;
+	struct s_envp	*next;
+}	t_envp;
+
+typedef struct s_info
+{
+	char	**argv;
+	int		cmd_cnt;
+	char	**envp;
+	int		exit_code;
+	int		here_doc_cnt;
+	int		i_fd;
+	int		o_fd;
+	char	**path;
+	pid_t	*pid;
+	int		pipe_cnt;
+	int		**pipefd;
+}	t_info;
+
+// ------------------------------------taekhkim-------------------------------------------
 // main
-void	display_list(t_token_list **head);
-void	list_free(t_token_list **head);
-void	type_print(t_token_list *now);
-void	list_free(t_token_list **head);
 
 // ft_str
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -71,6 +98,7 @@ char	*ft_lowercasing(char *cmd);
 // make_token
 int		make_token(char *str, int start, t_token_list **head);
 int		make_token_sub(char *str, int start, t_token_list **head);
+int		make_token_sub1(char *str, int start, int q, int flag);
 int		str_to_token(char *str, int start, int i, t_token_list **head);
 int		input_token(char *str, t_token_list **head);
 
@@ -95,6 +123,7 @@ void	delete_q_helper1(char *str, char *restr, char q, int j);
 int		tokenization(char *str, t_token_list **head);
 int		token_change(t_token_list **head);
 int		last_token_input(t_token_list **head);
+int		token_check(t_token_list **head);
 
 // token_type
 int		input_type(t_token_list **head);
@@ -107,7 +136,85 @@ int		cmd_to_lowercase(t_token_list **head);
 // token_check
 int		quotation_check(char *str);
 int		is_space(char c);
+void	list_free_k(t_token_list **head, char *error_msg);
+
+// ------------------------------------taekhkim-------------------------------------------
 
 // echo/echo.c
 int		echo(char **argv);
+
+// kim_min_yeong
+
+// argv_envp_path_set.c
+int		av_ev_path_file_set(t_token_list *head, t_envp *envp, t_info *info);
+
+// child_process.c
+void	child_process(t_info *info, int i);
+
+// envp.c
+void	set_envp(t_envp **env, char **envp);
+
+// ft_free.c
+void	t_token_list_free(t_token_list **head);
+void	array_2d_free(void **arr);
+
+// minishell.c
+int		main(int argc, char **argv, char **envp);
+int		do_nothing(void);
+
+// minishell_utils.c
+void	*ft_malloc(size_t size, size_t cnt);
+int		ft_perror(char *str);
+void	cmd_path_find(t_envp *envp, t_info *info);
+void	ctrl_d_print_exit();
+void	info_terminal_signal_reset(t_info *info);
+
+// set_signal.c
+void	set_parent_signal();
+
+// set_terminal.c
+void	set_terminal_not_print(void);
+void	reset_terminal(void);
+
+// get_next_line.c
+char	*get_next_line(int fd);
+
+// get_next_line_utils.c
+int		find_enter(char *str);
+char	*ensure_not_null(char *str);
+
+// here_doc_set_signal.c
+void	here_doc_parent_sigint(int sig);
+void	here_doc_child_sigint(int sig);
+
+// here_doc_utils.c
+void	here_doc_file_unlink(int here_doc_cnt);
+int		ft_limiter_check(char *str1, char *str2);
+
+// here_doc.c
+int		here_doc(char *filename, char *limiter);
+void	fake_here_doc(char *limiter);
+void	find_here_doc_and_process(t_token_list *head, t_info *info);
+int		here_doc_preprocessor(t_token_list *head, t_info *info);
+
+// pipex.c
+int	exec_process(t_token_list *head, t_envp *envp, t_info *info);
+
+// ft_itoa.c
+char	*ft_itoa(int n);
+
+// ft_putstr_fd.c
+void	ft_putstr_fd(char *s, int fd);
+
+// ft_split.c
+char	**ft_split(char const *s, char c);
+
+// ft_strjoin.c
+char	*ft_strjoin(char const *s1, char const *s2);
+
+// print_test.c
+void	list_free(t_token_list **head);
+void	type_print(t_token_list *now);
+void	display_list(t_token_list **head);
+
 #endif

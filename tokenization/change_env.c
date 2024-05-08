@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 14:52:43 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:05 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 char	*change_env(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 15:08:25 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:24:49 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 
 int	tokenization(char *str, t_token_list **head)
@@ -20,7 +20,7 @@ int	tokenization(char *str, t_token_list **head)
 	i = 0;
 	if (quotation_check(str) == FAIL)
 	{
-		list_free(head, "quotation_check_error\n");
+		list_free_k(head, "quotation_check_error\n");
 		return (FAIL);
 	}
 	while (str[i] != '\0')
@@ -29,7 +29,7 @@ int	tokenization(char *str, t_token_list **head)
 			i = make_token(str, i, head);
 		if (i == FAIL)
 		{
-			list_free(head, "make_token_error\n");
+			list_free_k(head, "make_token_error\n");
 			return (FAIL);
 		}
 		if (str[i] == '\0')
@@ -38,7 +38,7 @@ int	tokenization(char *str, t_token_list **head)
 		{
 			if (last_token_input(head) == FAIL)
 			{
-				list_free(head, "last_token_input_error\n");
+				list_free_k(head, "last_token_input_error\n");
 				return (FAIL);
 			}
 		}
@@ -51,17 +51,17 @@ int	token_check(t_token_list **head)
 {
 	if (input_type(head) == FAIL)
 	{
-		list_free(head, "input_type FAIL\n");
+		list_free_k(head, "input_type FAIL\n");
 		return (FAIL);
 	}
 	if (token_change(head) == FAIL)
 	{
-		list_free(head, "token_change FAIL\n");
+		list_free_k(head, "token_change FAIL\n");
 		return (FAIL);
 	}
 	if (token_typing(head) == FAIL)
 	{
-		list_free(head, "token_typing FAIL\n");
+		list_free_k(head, "token_typing FAIL\n");
 		return (FAIL);
 	}
 	return (SUCCESS);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:49:52 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/07 20:56:40 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:20:28 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 void	here_doc_file_unlink(int here_doc_cnt)
 {

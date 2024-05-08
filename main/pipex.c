@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/07 21:32:37 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:25:39 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 static int	make_pipe(t_token_list *head, t_info *info)
 {
@@ -78,23 +78,31 @@ static int	pipex(t_token_list *head, t_envp *envp, t_info *info, int i)
 	return (SUCCESS);
 }
 
-int	exec_process(t_token_list *head, t_envp *envp, t_info *info)
+int exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
-	int		i;
-
-	i = 0;
-	if (pipex_initial_settings(head, info) == FAIL)
-		return (EXIT_FAILURE);
-	while (i < info->pipe_cnt + 1)
-	{
-		if (pipex(head, envp, info, i) == FAIL)
-			return (EXIT_FAILURE);
-		while (head != NULL && head->type != PIPE)
-			head = head->next;
-		if (head != NULL && head->type == PIPE)
-			head = head->next;
-		i++;
-	}
-	// wait_exit(pid, cmd_cnt, pipe_info);
-	return (SUCCESS);
+    int     i;
+    // 임시로 만듬
+    int     temp;
+    i = 0;
+    if (pipex_initial_settings(head, info) == FAIL)
+        return (EXIT_FAILURE);
+    while (i < info->pipe_cnt + 1)
+    {
+        if (pipex(head, envp, info, i) == FAIL)
+            return (EXIT_FAILURE);
+        while (head != NULL && head->type != PIPE)
+            head = head->next;
+        if (head != NULL && head->type == PIPE)
+            head = head->next;
+        i++;
+    }
+    // 임시로 wait 만들어놓음 test 용도 - 위에 temp이랑 같이 만듦
+    temp = 0;
+    while (temp < info->pipe_cnt + 1)
+    {
+        wait(&i);
+        temp++;
+    }
+    // wait_exit(pid, cmd_cnt, pipe_info);
+    return (SUCCESS);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_terminal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:30:08 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/02 19:02:15 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:20:33 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "./minishell.h"
 
 void	set_terminal_not_print(void)
 {

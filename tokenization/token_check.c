@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:03:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/03 15:02:42 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:24:31 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 int	quotation_check(char *str)
 {
@@ -46,7 +46,7 @@ int	is_space(char c)
 	return (FAIL);
 }
 
-void	list_free(t_token_list **head, char *error_msg)
+void	list_free_k(t_token_list **head, char *error_msg)
 {
 	t_token_list	*temp;
 	t_token_list	*remove;

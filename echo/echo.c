@@ -6,11 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:20:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/02 16:01:47 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:22:54 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../main/minishell.h"
 
 int	echo(char **argv)	// 종료코드 정상 0 / 비정상 1
 {
