@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:11 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 //  ||은 오류로 띄움, | 주위 타입이 cmd 이거나 다른 거 여야 함
 int	token_typing(t_token_list **head)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:37 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:06 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

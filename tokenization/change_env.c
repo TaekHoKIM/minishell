@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:05 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:48:07 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 char	*change_env(char *str)
 {

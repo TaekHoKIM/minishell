@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   make_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:56:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:27:16 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 int	make_token(char *str, int start, t_token_list **head)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:03:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:24:31 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 int	quotation_check(char *str)
 {

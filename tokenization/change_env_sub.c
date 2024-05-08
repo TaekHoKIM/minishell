@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   change_env_sub.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 23:39:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:00 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main/minishell.h"
+#include "../minishell.h"
 
 char	*remove_str(char *str, int start, int len)
 {
