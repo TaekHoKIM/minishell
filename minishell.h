@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/10 15:38:38 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/11 03:29:53 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define CMD_NOT_FOUND 127
 # define STDIN 0
 # define STDOUT 1
+# define MAX_PATH 300
 
 enum	e_type
 {
@@ -61,6 +62,18 @@ enum	e_type
 	// 개행 뒤에 온 모든 것을 하나의 토큰화 
 	END
 };
+
+enum	e_builtin
+{
+	B_ECHO = 1,
+	B_CD = 2,
+	B_PWD = 3,
+	B_EXPORT = 4,
+	B_UNSET = 5,
+	B_ENV = 6,
+	B_EXIT = 7
+};
+
 typedef struct s_token_list{
 	int					type;
 	char				*token;
@@ -75,11 +88,13 @@ typedef struct s_envp{
 typedef struct s_info
 {
 	char	**argv;
+	int		builtin;
 	int		cmd_cnt;
 	char	**envp;
 	int		exit_code;
 	int		here_doc_cnt;
 	int		i_fd;
+	int		last_child_pid;
 	int		o_fd;
 	char	**path;
 	pid_t	*pid;
@@ -157,6 +172,8 @@ int		av_ev_path_file_set(t_token_list *head, t_envp *envp, t_info *info);
 // basic_set_signal.c
 void	bagic_set_parent_signal();
 
+// builtin_check_and_exec.c
+void	builtin_check_and_exec(t_token_list *head, t_envp *envp, t_info *info);
 // child_fd_set.c
 void	first_command_fd_set(t_info	*info, int i);
 void	last_command_fd_set(t_info *info, int i);
@@ -166,10 +183,11 @@ void	middle_command_fd_set(t_info *info, int i);
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i);
 void	pipe_set(int i_fd, int o_fd);
 
-// envp.c
-void	set_envp(t_envp **env, char **envp);
+// exec_process.c
+void	exec_process(t_token_list *head, t_envp *envp, t_info *info);
+void	close_fd(void);
 
-// ft_free.c
+// free.c
 void	t_token_list_free(t_token_list **head);
 void	array_2d_free(void **arr);
 
@@ -209,16 +227,15 @@ int		here_doc_preprocessor(t_token_list *head, t_info *info);
 // minishell_utils.c
 void	*ft_malloc(size_t size, size_t cnt);
 int		ft_perror(char *str);
-void	cmd_path_find(t_envp *envp, t_info *info);
+void	ft_chdir(char *path);
 void	ctrl_d_print_exit();
 void	info_terminal_signal_reset(t_info *info);
 
 // minishell.c
 int		main(int argc, char **argv, char **envp);
 
-// pipex.c
-int	exec_process(t_token_list *head, t_envp *envp, t_info *info);
-void	close_fd(void);
+// set_envp.c
+void	set_envp(t_envp **env, char **envp);
 
 // set_terminal.c
 void	set_terminal_not_print(void);
@@ -231,5 +248,8 @@ void	child_process_wait(t_info *info);
 
 // echo/echo.c
 int		echo(char **argv);
+
+// cd/change_dir.c
+void	change_dir(t_token_list *head, t_envp *envp, t_info *info);
 
 #endif
