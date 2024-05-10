@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:48:07 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:08:04 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*change_env(char *str)
+char	*change_env(char *str, t_envp *env)
 {
 	int		i;
 	int		flag;
@@ -25,7 +25,7 @@ char	*change_env(char *str)
 	{
 		if (change_env_flag(re_str[i], &flag) == ON)
 		{
-			re_str = change_env_sub(re_str, &i);
+			re_str = change_env_sub(re_str, &i, env);
 			if (re_str == NULL)
 				return (NULL);
 		}
@@ -34,7 +34,7 @@ char	*change_env(char *str)
 	return (re_str);
 }
 
-char	*change_env_sub(char *str, int	*index)
+char	*change_env_sub(char *str, int	*index, t_envp *env)
 {
 	int		i;
 	int		j;
@@ -53,7 +53,7 @@ char	*change_env_sub(char *str, int	*index)
 			free(restr);
 			return (NULL);
 		}
-		i = change_env_sub1(&restr, temp_str, i, j);
+		i = change_env_sub1(&restr, temp_str, i, j, env);
 		free(temp_str);
 		if (i == FAIL)
 			return (NULL);
@@ -62,16 +62,12 @@ char	*change_env_sub(char *str, int	*index)
 	return (restr);
 }
 
-int	change_env_sub1(char **restr, char *temp_str, int i, int j)
+int	change_env_sub1(char **restr, char *temp_str, int i, int j, t_envp *env)
 {
 	int		idx;
 	char	*env_str;
 
-	env_str = getenv(temp_str);
-	// 여기에서 getenv가 아니라 다른 거를 사용해야 됨 함수 변환 필요 + 인자로 env list 필요
-	if (env_str != NULL)
-		env_str = ft_strdup(env_str);
-	// 여기까지 고려해서 env 함수 만들기
+	env_str = user_getenv(temp_str, env);
 	idx = i;
 	if (env_str == NULL)
 	{
@@ -84,6 +80,8 @@ int	change_env_sub1(char **restr, char *temp_str, int i, int j)
 		idx = idx + ft_strlen(env_str) - 1;
 	}
 	free(env_str);
+	if (idx == -1)
+		return (0);
 	if (restr == NULL)
 		return (FAIL);
 	return (idx);
@@ -122,4 +120,31 @@ int	check_special_char(char *restr, int i)
 			c = restr[i + j];
 		}
 	return (j);
+}
+
+char	*user_getenv(char *str, t_envp *env)
+{
+	int		strlen;
+	char	*cmp_str;
+	char	*re_str;
+	t_envp	*temp;
+
+	strlen = ft_strlen(str);
+	temp = env;
+	while (temp != NULL)
+	{
+		cmp_str = temp->line;
+		if (ft_strncmp(str, cmp_str, strlen) == SUCCESS)
+		{
+			if (cmp_str[strlen] == '=')
+			{
+				re_str = ft_substr(cmp_str, strlen + 1, ft_strlen(cmp_str) - (strlen + 1));
+				if (re_str == NULL)
+					return (NULL);
+				return (re_str);
+			}
+		}
+		temp = temp->next;
+	}
+	return (NULL);
 }

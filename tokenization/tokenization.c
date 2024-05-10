@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:45:10 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-int	tokenization(char *str, t_token_list **head)
+int	tokenization(char *str, t_token_list **head, t_envp *env)
 {
 	int		i;
 
@@ -44,17 +44,17 @@ int	tokenization(char *str, t_token_list **head)
 		}
 		i++;
 	}
-	return (token_check(head));
+	return (token_check(head, env));
 }
 
-int	token_check(t_token_list **head)
+int	token_check(t_token_list **head, t_envp *env)
 {
 	if (input_type(head) == FAIL)
 	{
 		list_free_k(head, "input_type FAIL\n");
 		return (FAIL);
 	}
-	if (token_change(head) == FAIL)
+	if (token_change(head, env) == FAIL)
 	{
 		list_free_k(head, "token_change FAIL\n");
 		return (FAIL);

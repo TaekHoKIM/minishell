@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:38:59 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	token_typing(t_token_list **head)
 		return (FAIL);
 	check_cmd(head);
 	check_open_redi(head);
+	remove_token(head);
 	return (SUCCESS);
 }
 
@@ -173,5 +174,52 @@ int	check_cmd(t_token_list **head)
 	}
 	if (temp != NULL)
 		temp->type = CMD;
+	return (SUCCESS);
+}
+
+int	remove_token(t_token_list **head)
+{
+	t_token_list	*now_t;
+	t_token_list	*rm_t;
+	t_token_list	*pre_t;
+	t_token_list	*first_t;
+
+	now_t = (*head);
+	while (now_t != NULL)
+	{
+		if (now_t->token != NULL && ft_strlen(now_t->token) == 0)
+		{
+			rm_t = now_t;
+			free(rm_t->token);
+			now_t = now_t->next;
+			free(rm_t);
+		}
+		else
+			break ;
+	}
+	first_t = now_t;
+	if (first_t == NULL)
+	{
+		(*head) = NULL;
+		return (SUCCESS);
+	}
+	pre_t = now_t;
+	now_t = now_t->next;
+	while (now_t != NULL)
+	{
+		if (now_t->token != NULL && ft_strlen(now_t->token) == 0)
+		{
+			rm_t = now_t;
+			free(rm_t->token);
+			now_t = now_t->next;
+			pre_t->next = now_t;
+			free(rm_t);
+		}
+		else
+		{
+			pre_t = now_t;
+			now_t = now_t->next;
+		}
+	}
 	return (SUCCESS);
 }

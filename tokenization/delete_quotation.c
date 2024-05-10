@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:46:11 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	token_change(t_token_list **head)
+int	token_change(t_token_list **head, t_envp *env)
 {
 	char			*re_str;
 	t_token_list	*now;
@@ -25,7 +25,7 @@ int	token_change(t_token_list **head)
 		if (now->type != END)
 		{
 			re_str = now->token;
-			re_str = change_env(re_str);
+			re_str = change_env(re_str, env);
 			if (re_str == NULL)
 				return (FAIL);
 			re_str = delete_q(re_str);
