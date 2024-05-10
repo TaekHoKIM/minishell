@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 22:06:12 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/11 00:07:03 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,35 +61,21 @@ void	close_fd(void)
 	}
 }
 
-static int	pipex(t_token_list *head, t_envp *envp, t_info *info, int i)
-{
-	info->pid[i] = fork();
-	if (info->pid[i] == FAIL)
-		return (ft_perror("fork"));
-	if (info->pid[i] == 0)
-		child_process(head, envp, info, i);
-	return (SUCCESS);
-}
-
-static int	pipex_initial_settings(t_token_list *head, t_info *info)
-{
-	if (make_pipe(head, info) == FAIL)
-		return (FAIL);
-	info->pid = ft_malloc(sizeof(pid_t), info->pipe_cnt + 1);
-	signal(SIGINT, SIG_IGN);
-	return (SUCCESS);
-}
-
 int exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
     int     i;
     i = 0;
-    if (pipex_initial_settings(head, info) == FAIL)
-        return (EXIT_FAILURE);
+   if (make_pipe(head, info) == FAIL)
+		return (FAIL);
+	info->pid = ft_malloc(sizeof(pid_t), info->pipe_cnt + 1);
+	signal(SIGINT, SIG_IGN);
     while (i < info->pipe_cnt + 1)
     {
-        if (pipex(head, envp, info, i) == FAIL)
-            return (EXIT_FAILURE);
+		info->pid[i] = fork();
+		if (info->pid[i] == FAIL)
+			return (ft_perror("fork"));
+		if (info->pid[i] == 0)
+			child_process(head, envp, info, i);
         while (head != NULL && head->type != PIPE)
             head = head->next;
         if (head != NULL && head->type == PIPE)
