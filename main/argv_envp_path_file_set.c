@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv_envp_path_file_set.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 20:19:49 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:16:08 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	file_set(t_token_list *head, t_info *info)
 	{
 		if (tmp->type == IN_OPEN_D1 || tmp->type == IN_OPEN_D2)
 			info->i_fd = open(tmp->token, O_RDONLY);
-		else if (tmp->type == OUT_OPEN_D1)
+		else if (tmp->type == OUT_OPEN_D1 || tmp->type == OUT_D1_ARG)
 			info->o_fd = open(tmp->token, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (tmp->type == OUT_OPEN_D2)
+		else if (tmp->type == OUT_OPEN_D2 || tmp->type == OUT_D2_ARG)
 			info->o_fd = open(tmp->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (info->i_fd == FAIL || info->o_fd == FAIL)
 			return (ft_perror(tmp->token));
