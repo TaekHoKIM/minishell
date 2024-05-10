@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 21:09:46 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/11 03:26:43 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ int	ft_perror(char *str)
 	return (FAIL);
 }
 
+void	ft_chdir(char *path)
+{
+	if (chdir(path) == FAIL)
+	{
+		ft_perror("chdir");
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	ctrl_d_print_exit()
 {
 	ft_putstr_fd("\033[1A", STDOUT_FILENO); // 현재 커서의 위치를 한칸 위로 올려줌 
@@ -46,6 +55,7 @@ void	info_terminal_signal_reset(t_info *info)
 	info->envp = NULL;
 	info->here_doc_cnt = 0;
 	info->i_fd = STDIN_FILENO;
+	info->last_child_pid = 0;
 	info->o_fd = STDOUT_FILENO;
 	array_2d_free((void **)info->path);
 	info->path = NULL;
