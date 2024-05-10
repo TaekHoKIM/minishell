@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 00:07:03 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/11 03:08:31 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,22 @@ void	close_fd(void)
 	}
 }
 
-int exec_process(t_token_list *head, t_envp *envp, t_info *info)
+void exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
     int     i;
     i = 0;
    if (make_pipe(head, info) == FAIL)
-		return (FAIL);
+		return ;
 	info->pid = ft_malloc(sizeof(pid_t), info->pipe_cnt + 1);
 	signal(SIGINT, SIG_IGN);
     while (i < info->pipe_cnt + 1)
     {
 		info->pid[i] = fork();
 		if (info->pid[i] == FAIL)
-			return (ft_perror("fork"));
+		{
+			ft_perror("fork");
+			return ;
+		}
 		if (info->pid[i] == 0)
 			child_process(head, envp, info, i);
         while (head != NULL && head->type != PIPE)
@@ -84,5 +87,4 @@ int exec_process(t_token_list *head, t_envp *envp, t_info *info)
     }
 	close_fd();
     child_process_wait(info);
-    return (SUCCESS);
 }
