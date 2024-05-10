@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:51:07 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 20:31:19 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/11 03:09:43 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	child_process_wait(t_info *info)
 		waitpid(info->pid[i], &status, 0);
 		i++;
 	}
-	
-	info->exit_code = WEXITSTATUS(status);
+	if (i != 0)
+	{
+		info->exit_code = WEXITSTATUS(status);
+		info->last_child_pid = info->pid[i - 1];
+	}
 }
