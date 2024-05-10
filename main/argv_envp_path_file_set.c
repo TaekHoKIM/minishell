@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv_envp_path_file_set.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/10 14:16:08 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/11 01:11:57 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void argv_set(t_token_list *head, t_info *info)
             info->cmd_cnt++;
         tmp = tmp->next;
     }
-    if (info->cmd_cnt == 0)
-        return ;
     info->argv = ft_malloc(sizeof(char *), info->cmd_cnt + 1);
     info->argv[info->cmd_cnt] = NULL;
     i = 0;
