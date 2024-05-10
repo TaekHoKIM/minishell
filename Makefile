@@ -2,6 +2,7 @@ NAME		=	minishell
 
 SRCS		=	main/argv_envp_path_file_set.c		\
 				main/basic_set_signal.c				\
+				main/builtin_check_and_exec.c		\
 				main/child_fd_set.c					\
 				main/child_process.c				\
 				main/exec_process.c					\
@@ -28,7 +29,8 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				tokenization/make_token.c			\
 				tokenization/token_check.c			\
 				tokenization/token_type.c			\
-				tokenization/tokenization.c
+				tokenization/tokenization.c			\
+				cd/change_dir.c
 
 OBJS	=	$(SRCS:.c=.o)
 
