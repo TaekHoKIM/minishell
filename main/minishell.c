@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 01:06:14 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/11 03:12:26 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	minishell_initial_settings(t_envp **env, t_info *info, char **envp)
 	info->envp = NULL;
 	info->here_doc_cnt = 0;
 	info->i_fd = STDIN_FILENO;
+	info->last_child_pid = 0;
 	info->o_fd = STDOUT_FILENO;
 	info->path = NULL;
 	info->pid = NULL;
@@ -67,8 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		if (here_doc_preprocessor(head, &info) == FAIL)
 			info.exit_code = EXIT_FAILURE;
 		else
-			if (exec_process(head, env, &info) == FAIL)
-				info.exit_code = EXIT_FAILURE;
+			exec_process(head, env, &info);
 		t_token_list_free(&head);
 		here_doc_file_unlink(info.here_doc_cnt);
 		info_terminal_signal_reset(&info);
