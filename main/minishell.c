@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/10 15:40:04 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/11 01:06:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 // $? 애초에 $는 전부 환경변수로 치환이 된다. $?는 특별하게 치환이 된다고 한다.
 // 처음에는 0으로 초기화가 돼있다. 전에 실행했던 명령어의 종료 값을 출력한다고 한다.
 // 그럼 치환부분을 어떻게 구현해야하는거지? 
-
 
 // 정상 작동 안 하는 명령어들
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
@@ -55,6 +54,8 @@ int	main(int argc, char **argv, char **envp)
 	t_envp			*env;
 	t_info			info;
 
+	(void)argc;
+	(void)argv;
 	minishell_initial_settings(&env, &info, envp);
 	while (1)
 	{
@@ -63,10 +64,11 @@ int	main(int argc, char **argv, char **envp)
 			ctrl_d_print_exit();
 		add_history(line);
 		tokenization(line, &head, env);
-		if (here_doc_preprocessor(head, &info) != FAIL)
-			info.exit_code = exec_process(head, env, &info);
-		else
+		if (here_doc_preprocessor(head, &info) == FAIL)
 			info.exit_code = EXIT_FAILURE;
+		else
+			if (exec_process(head, env, &info) == FAIL)
+				info.exit_code = EXIT_FAILURE;
 		t_token_list_free(&head);
 		here_doc_file_unlink(info.here_doc_cnt);
 		info_terminal_signal_reset(&info);
