@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 03:08:31 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:06:05 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,28 @@ void	close_fd(void)
 	}
 }
 
+void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info, int flag)
+{
+	t_token_list	*tmp;
+
+	tmp = head;
+	while (tmp != NULL && tmp->type != PIPE)
+	{
+		if (tmp->type == CMD)
+		{
+			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
+				change_dir(head, envp, info);
+			// else if (ft_strcmp(tmp->token, "export") == SUCCESS)
+				
+			// else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
+				
+			// else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
+				
+		}
+		tmp = tmp->next;
+	}
+}
+
 void exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
     int     i;
@@ -71,6 +93,7 @@ void exec_process(t_token_list *head, t_envp *envp, t_info *info)
 	signal(SIGINT, SIG_IGN);
     while (i < info->pipe_cnt + 1)
     {
+		parent_builtin(head, envp, info, PARENT);
 		info->pid[i] = fork();
 		if (info->pid[i] == FAIL)
 		{
