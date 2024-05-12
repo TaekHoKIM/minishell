@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 17:44:07 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:58:51 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
-static void	minishell_initial_settings(t_info *info, int argc, char **argv)
+static void	initial_set(t_token_list *head, t_info *info, int argc, char **argv)
 {
 	info->argv = NULL;
 	info->cmd_cnt = 0;
@@ -45,6 +45,7 @@ static void	minishell_initial_settings(t_info *info, int argc, char **argv)
 	info->exit_code = 0;
 	set_terminal_not_print();
 	bagic_set_parent_signal();
+	head = NULL;
 	(void)argc;
 	(void)argv;
 }
@@ -57,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	t_info			info;
 
 	set_envp(&env, envp);
-	minishell_initial_settings(&info, argc, argv);
+	initial_set(head, &info, argc, argv);
 	while (1)
 	{
 		line = readline("minishell % ");
