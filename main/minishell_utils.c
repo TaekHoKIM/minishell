@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 17:20:52 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:49:21 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_malloc(size_t size, size_t cnt)
 {
 	void	*tmp;
 
-	tmp = malloc(sizeof(size) * cnt);
+	tmp = malloc(size * cnt);
 	if (tmp == NULL)
 		exit(EXIT_FAILURE);
 	return (tmp);
