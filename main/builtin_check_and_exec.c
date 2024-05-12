@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_check_and_exec.c                           :+:      :+:    :+:   */
+/*   builtin_check_exec.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:36:12 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 03:06:35 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:36:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // ◦ env with no options or arguments
 // ◦ exit with no options
 
-static int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static int	ft_strcmp(char *s1, char *s2)
 	return (FAIL);
 }
 
-void	builtin_check_and_exec(t_token_list *head, t_envp *envp, t_info *info)
+void	builtin_check_exec(t_token_list *head, t_envp *envp, t_info *info)
 {
 	t_token_list	*tmp;
 
@@ -46,17 +46,17 @@ void	builtin_check_and_exec(t_token_list *head, t_envp *envp, t_info *info)
 			// if (ft_strcmp(tmp->token, "echo") == SUCCESS)
 				
 			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
-				change_dir(head, envp, info);
+				exit(EXIT_SUCCESS);
 			// else if (ft_strcmp(tmp->token, "pwd") == SUCCESS)
 				
-			// else if (ft_strcmp(tmp->token, "export") == SUCCESS)
-				
-			// else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "export") == SUCCESS)
+				exit(EXIT_SUCCESS);
+			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
+				exit(EXIT_SUCCESS);
 			// else if (ft_strcmp(tmp->token, "env") == SUCCESS)
 				
-			// else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
+				exit(EXIT_SUCCESS);
 		}
 		tmp = tmp->next;
 	}
