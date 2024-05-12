@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/11 03:29:53 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:27:12 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define STDIN 0
 # define STDOUT 1
 # define MAX_PATH 300
+# define PARENT 2
+# define CHILD 1
 
 enum	e_type
 {
@@ -168,12 +170,15 @@ void	list_free_k(t_token_list **head, char *error_msg);
 
 // argv_envp_path_set.c
 int		av_ev_path_file_set(t_token_list *head, t_envp *envp, t_info *info);
+void	argv_set(t_token_list *head, t_info *info);
 
 // basic_set_signal.c
 void	bagic_set_parent_signal();
 
-// builtin_check_and_exec.c
-void	builtin_check_and_exec(t_token_list *head, t_envp *envp, t_info *info);
+// builtin_check_exec.c
+void	builtin_check_exec(t_token_list *head, t_envp *envp, t_info *info);
+int		ft_strcmp(char *s1, char *s2);
+
 // child_fd_set.c
 void	first_command_fd_set(t_info	*info, int i);
 void	last_command_fd_set(t_info *info, int i);
@@ -227,7 +232,7 @@ int		here_doc_preprocessor(t_token_list *head, t_info *info);
 // minishell_utils.c
 void	*ft_malloc(size_t size, size_t cnt);
 int		ft_perror(char *str);
-void	ft_chdir(char *path);
+int		ft_chdir(char *path, t_info *info);
 void	ctrl_d_print_exit();
 void	info_terminal_signal_reset(t_info *info);
 
