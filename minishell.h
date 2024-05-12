@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 16:27:12 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:28:32 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,14 @@ char	*change_env(char *str, t_envp *env);
 int		change_env_flag(char c, int *flag);
 char	*change_env_sub(char *str, int	*index, t_envp *env);
 int		check_special_char(char *restr, int i);
-int		change_env_sub1(char **restr, char *temp_str, int i, int j, t_envp *env);
-char	*user_getenv(char *str, t_envp *env);
+int		change_env_sub1(char **restr, char *temp_str, int set[2], t_envp *env);
+
 
 // change_env_sub
 char	*remove_str(char *str, int start, int len);
 char	*change_str(char *str, int start, char *change_str, int len);
-void	change_str1(char *str, char *re_str, char *change_str, int start, int len);
+void	change_str1(char *str, char *re_str, char *change_str, int set[2]);
+char	*user_getenv(char *str, t_envp *env);
 
 // delete_quotation
 char	*delete_q(char *restr);
@@ -147,14 +148,21 @@ int		token_change(t_token_list **head, t_envp *env);
 int		last_token_input(t_token_list **head);
 int		token_check(t_token_list **head, t_envp *env);
 
+// check_open_redi
+int		check_open_redi(t_token_list **head);
+void	check_open_redi_mid(t_token_list **in_temp, t_token_list **out_temp);
+void	check_open_redi_last(t_token_list **in_temp, t_token_list **out_temp);
+
 // token_type
 int		input_type(t_token_list **head);
+void	input_type_sub(t_token_list *now, int pre_type);
 int		token_typing(t_token_list **head);
 int		syntax_check_type(t_token_list **head);
-int		check_open_redi(t_token_list **head);
 int		check_cmd(t_token_list **head);
+
+// remove_token
 int		remove_token(t_token_list **head);
-// int		cmd_to_lowercase(t_token_list **head);
+void	remove_token_sub(t_token_list *now);
 
 // token_check
 int		quotation_check(char *str);

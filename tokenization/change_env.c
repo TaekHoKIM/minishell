@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/10 15:08:04 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:32:30 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char	*change_env(char *str, t_envp *env)
 		if (change_env_flag(re_str[i], &flag) == ON)
 		{
 			re_str = change_env_sub(re_str, &i, env);
-			if (re_str == NULL)
-				return (NULL);
 		}
 		i++;
 	}
@@ -36,54 +34,44 @@ char	*change_env(char *str, t_envp *env)
 
 char	*change_env_sub(char *str, int	*index, t_envp *env)
 {
-	int		i;
-	int		j;
+	int		set[2];
 	char	*restr;
 	char	*temp_str;
 	char	*env_str;
 
-	i = *index;
+	set[0] = *index;
 	restr = str;
-	j = check_special_char(restr, i);
-	if (j != 1)
+	set[1] = check_special_char(restr, set[0]);
+	if (set[1] != 1)
 	{
-		temp_str = ft_substr(restr, i + 1, j - 1);
-		if (temp_str == NULL)
-		{
-			free(restr);
-			return (NULL);
-		}
-		i = change_env_sub1(&restr, temp_str, i, j, env);
+		temp_str = ft_substr(restr, set[0] + 1, set[1] - 1);
+		set[0] = change_env_sub1(&restr, temp_str, set, env);
 		free(temp_str);
-		if (i == FAIL)
-			return (NULL);
-		*index = i;
+		*index = set[0];
 	}
 	return (restr);
 }
 
-int	change_env_sub1(char **restr, char *temp_str, int i, int j, t_envp *env)
+int	change_env_sub1(char **restr, char *temp_str, int set[2], t_envp *env)
 {
 	int		idx;
 	char	*env_str;
 
 	env_str = user_getenv(temp_str, env);
-	idx = i;
+	idx = set[0];
 	if (env_str == NULL)
 	{
-		*restr = remove_str(*restr, idx, j);
+		*restr = remove_str(*restr, idx, set[1]);
 		idx--;
 	}
 	else
 	{
-		*restr = change_str(*restr, idx, env_str, j);
+		*restr = change_str(*restr, idx, env_str, set[1]);
 		idx = idx + ft_strlen(env_str) - 1;
 	}
 	free(env_str);
 	if (idx == -1)
 		return (0);
-	if (restr == NULL)
-		return (FAIL);
 	return (idx);
 }
 
@@ -113,38 +101,11 @@ int	check_special_char(char *restr, int i)
 		return (j);
 	j++;
 	c = restr[i + j];
-	while ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || (c == '_')
-			|| ('0' <= c && c <= '9')))
-		{
-			j++;
-			c = restr[i + j];
-		}
-	return (j);
-}
-
-char	*user_getenv(char *str, t_envp *env)
-{
-	int		strlen;
-	char	*cmp_str;
-	char	*re_str;
-	t_envp	*temp;
-
-	strlen = ft_strlen(str);
-	temp = env;
-	while (temp != NULL)
+	while ((('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z')
+			|| (c == '_') || ('0' <= c && c <= '9')))
 	{
-		cmp_str = temp->line;
-		if (ft_strncmp(str, cmp_str, strlen) == SUCCESS)
-		{
-			if (cmp_str[strlen] == '=')
-			{
-				re_str = ft_substr(cmp_str, strlen + 1, ft_strlen(cmp_str) - (strlen + 1));
-				if (re_str == NULL)
-					return (NULL);
-				return (re_str);
-			}
-		}
-		temp = temp->next;
+		j++;
+		c = restr[i + j];
 	}
-	return (NULL);
+	return (j);
 }

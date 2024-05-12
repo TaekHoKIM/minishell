@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:56:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:04:44 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@ int	make_token(char *str, int start, t_token_list **head)
 	else if (q == '<' || q == '>' || q == '|')
 	{
 		i = make_token_sub(str, start, head);
-		if (i == FAIL)
-			return (FAIL);
 		return (i);
 	}
 	i = make_token_sub1(str, start, q, flag);
-	if (str_to_token(str, start, i, head) == FAIL)
-		return (FAIL);
+	str_to_token(str, start, i, head);
 	if (str[i] == '<' || str[i] == '>' || str[i] == '|')
 		i--;
 	return (i);
@@ -46,23 +43,20 @@ int	make_token_sub(char *str, int start, t_token_list **head)
 	p = str[start + 1];
 	if ((q == '<' && p == '<') || (q == '>' && p == '>'))
 	{
-		if (str_to_token(str, start, start + 2, head) == FAIL)
-			return (FAIL);
+		str_to_token(str, start, start + 2, head);
 		return (start + 1);
 	}
 	else if ((q == '|' && p == '|'))
 	{
-		if (str_to_token(str, start, start + 2, head) == FAIL)
-			return (FAIL);
+		str_to_token(str, start, start + 2, head);
 		return (start + 1);
 	}
 	else if (q == '|' || (q == '<') || (q == '>'))
 	{
-		if (str_to_token(str, start, start + 1, head) == FAIL)
-			return (FAIL);
+		str_to_token(str, start, start + 1, head);
 		return (start);
 	}
-	return (FAIL);
+	return (SUCCESS);
 }
 
 int	make_token_sub1(char *str, int start, int q, int flag)
@@ -94,15 +88,7 @@ int	str_to_token(char *str, int start, int i, t_token_list **head)
 	char	*re_str;
 
 	re_str = ft_substr(str, start, i - start);
-	if (re_str == NULL)
-	{
-		return (FAIL);
-	}
-	if (input_token(re_str, head) == FAIL)
-	{
-		free(re_str);
-		return (FAIL);
-	}
+	input_token(re_str, head);
 	return (SUCCESS);
 }
 
@@ -111,9 +97,7 @@ int	input_token(char *str, t_token_list **head)
 	t_token_list	*new;
 	t_token_list	*temp;
 
-	new = (t_token_list *)malloc(sizeof(t_token_list) * 1);
-	if (new == NULL)
-		return (FAIL);
+	new = (t_token_list *)ft_malloc(sizeof(t_token_list), 1);
 	new->token = str;
 	new->next = NULL;
 	if ((*head) == NULL)

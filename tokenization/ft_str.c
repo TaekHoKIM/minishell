@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 20:09:37 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:47:32 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:15:35 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		while (s[(size_t)start + max] != '\0' && max < len)
 			max++;
 	}
-	return_ptr = (char *)malloc(sizeof(char) * (max + 1));
-	if (return_ptr == NULL)
-		return (NULL);
+	return_ptr = (char *)ft_malloc(sizeof(char), (max + 1));
 	i = 0;
 	while (i < max)
 	{
@@ -58,9 +56,7 @@ char	*ft_strdup(const char *s1)
 	char	*return_ptr;
 
 	len = ft_strlen(s1);
-	return_ptr = (char *)malloc((sizeof(char) * len) + 1);
-	if (return_ptr == NULL)
-		return (NULL);
+	return_ptr = (char *)ft_malloc(sizeof(char), (len + 1));
 	i = 0;
 	while (s1[i] != '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/10 14:46:11 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:39:07 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,14 @@ int	token_change(t_token_list **head, t_envp *env)
 		{
 			re_str = now->token;
 			re_str = change_env(re_str, env);
-			if (re_str == NULL)
-				return (FAIL);
 			re_str = delete_q(re_str);
-			if (re_str == NULL)
-				return (FAIL);
 			now->token = re_str;
 		}
 		now = now->next;
 	}
 	return (SUCCESS);
 }
+
 char	*delete_q(char *restr)
 {
 	char	q;
@@ -51,12 +48,7 @@ char	*delete_q(char *restr)
 		{
 			q = str[i];
 			str = delete_q_helper(str, q, &i);
-			if (str == NULL)
-			{
-				printf("delete_q\n");
-				return (NULL);
-			}
-			else if (str[i] == '\0')
+			if (str[i] == '\0')
 				break ;
 		}
 		else
@@ -81,12 +73,8 @@ char	*delete_q_helper(char *restr, char q, int *s)
 		i++;
 	}
 	*s = i + 1;
-	if (restr[i] == '\0')
-		return (NULL);
-	str = (char *)malloc((sizeof(char) * ft_strlen(restr)) - 1);
+	str = (char *)ft_malloc(sizeof(char), (ft_strlen(restr) - 1));
 	*s = *s - 2;
-	if (str == NULL)
-		return (NULL);
 	delete_q_helper1(str, restr, q, j);
 	return (str);
 }

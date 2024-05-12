@@ -1,6 +1,3 @@
-#include "../minishell.h"
-#include <unistd.h>
-
 // int main()
 // {
 // 	t_token_list	*head;
@@ -14,19 +11,6 @@
 // 		display_list(&head);
 // 	}
 // 	return (0);
-// }
-
-// void	display_list(t_token_list **head)
-// {
-// 	t_token_list	*now;
-
-// 	now = (*head);
-// 	while (now != NULL)
-// 	{
-// 		printf("TOKEN>>>[%s]", now->token);
-// 		type_print(now);
-// 		now = now->next;
-// 	}
 // }
 
 // void	type_print(t_token_list *now)
@@ -71,3 +55,18 @@
 // 	else if (type == END)
 // 		printf(" : TYPE[END]\n");
 // }
+
+// void	display_list(t_token_list **head)
+// {
+// 	t_token_list	*now;
+
+// 	now = (*head);
+// 	while (now != NULL)
+// 	{
+// 		printf("TOKEN>>>[%s]", now->token);
+// 		type_print(now);
+// 		now = now->next;
+// 	}
+// }
+
+

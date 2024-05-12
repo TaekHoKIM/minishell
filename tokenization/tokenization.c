@@ -6,12 +6,11 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/10 14:45:10 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:16:48 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int	tokenization(char *str, t_token_list **head, t_envp *env)
 {
@@ -20,27 +19,18 @@ int	tokenization(char *str, t_token_list **head, t_envp *env)
 	i = 0;
 	if (quotation_check(str) == FAIL)
 	{
-		list_free_k(head, "quotation_check_error\n");
+		printf("Quotation Error\n");
 		return (FAIL);
 	}
 	while (str[i] != '\0')
 	{
 		if (is_space(str[i]) == FAIL)
 			i = make_token(str, i, head);
-		if (i == FAIL)
-		{
-			list_free_k(head, "make_token_error\n");
-			return (FAIL);
-		}
 		if (str[i] == '\0')
 			break ;
 		else if (str[i] == '\n')
 		{
-			if (last_token_input(head) == FAIL)
-			{
-				list_free_k(head, "last_token_input_error\n");
-				return (FAIL);
-			}
+			last_token_input(head);
 		}
 		i++;
 	}
@@ -49,19 +39,12 @@ int	tokenization(char *str, t_token_list **head, t_envp *env)
 
 int	token_check(t_token_list **head, t_envp *env)
 {
-	if (input_type(head) == FAIL)
-	{
-		list_free_k(head, "input_type FAIL\n");
-		return (FAIL);
-	}
+	input_type(head);
 	if (token_change(head, env) == FAIL)
-	{
-		list_free_k(head, "token_change FAIL\n");
 		return (FAIL);
-	}
 	if (token_typing(head) == FAIL)
 	{
-		list_free_k(head, "token_typing FAIL\n");
+		list_free_k(head, "Syntax Error\n");
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -72,7 +55,7 @@ int	last_token_input(t_token_list **head)
 	t_token_list	*temp;
 	t_token_list	*new;
 
-	new = (t_token_list *)malloc(sizeof(t_token_list) * 1);
+	new = (t_token_list *)ft_malloc(sizeof(t_token_list), 1);
 	if (new == NULL)
 		return (FAIL);
 	new->type = END;
