@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 04:01:35 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:30:55 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	old_pwd_set(t_envp *envp, char *pwd)
 	}
 }
 
-static void	pwd_set(t_envp *envp)
+static void	pwd_set(t_envp *envp, t_info *info)
 {
 	char	buf[MAX_PATH];
 	char	*path;
@@ -38,7 +38,8 @@ static void	pwd_set(t_envp *envp)
 	if (path == NULL)
 	{
 		ft_perror("getcwd");
-		exit(EXIT_FAILURE);
+		info->exit_code = 1;
+		return ;
 	}
 	while (envp != NULL)
 	{
@@ -59,18 +60,23 @@ void	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 	char	*path;
 
 	if (info->pipe_cnt > 0)
-		exit(EXIT_SUCCESS);
+		return ;
+	argv_set(head, info);
 	path = getcwd(buf, MAX_PATH);
 	if (path == NULL)
 	{
 		ft_perror("getcwd");
-		exit(EXIT_FAILURE);
+		info->exit_code = 1;
+		return ;
 	}
-	if (info->argv[0] == NULL)
-		ft_chdir("/Users/minyekim");
+	if (info->argv[1] == NULL)
+	{
+		if (ft_chdir("/Users/minyekim", info) == FAIL)
+			return ;
+	}
 	else
-		ft_chdir(info->argv[0]);
+		if (ft_chdir(info->argv[1], info) == FAIL)
+			return ;
 	old_pwd_set(envp, path);
-	pwd_set(envp);
-	exit(EXIT_SUCCESS);
+	pwd_set(envp, info);
 }
