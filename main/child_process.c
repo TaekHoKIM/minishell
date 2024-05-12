@@ -74,7 +74,7 @@ void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i)
 		middle_command_fd_set(info, i);
 	if (info->argv[0] == NULL)
 		exit(EXIT_SUCCESS);
-	builtin_check_and_exec(head, envp, info);
+	builtin_check_exec(head, envp, info);
 	cmd_path = access_check(info->path, info->argv[0]);
 	close_fd();
 	execve(cmd_path, info->argv, info->envp);
