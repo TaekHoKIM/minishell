@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 03:12:26 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:44:07 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
-static void	minishell_initial_settings(t_envp **env, t_info *info, char **envp)
+static void	minishell_initial_settings(t_info *info, int argc, char **argv)
 {
 	info->argv = NULL;
 	info->cmd_cnt = 0;
@@ -45,7 +45,8 @@ static void	minishell_initial_settings(t_envp **env, t_info *info, char **envp)
 	info->exit_code = 0;
 	set_terminal_not_print();
 	bagic_set_parent_signal();
-	set_envp(env, envp);
+	(void)argc;
+	(void)argv;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -55,9 +56,8 @@ int	main(int argc, char **argv, char **envp)
 	t_envp			*env;
 	t_info			info;
 
-	(void)argc;
-	(void)argv;
-	minishell_initial_settings(&env, &info, envp);
+	set_envp(&env, envp);
+	minishell_initial_settings(&info, argc, argv);
 	while (1)
 	{
 		line = readline("minishell % ");
@@ -65,6 +65,8 @@ int	main(int argc, char **argv, char **envp)
 			ctrl_d_print_exit();
 		add_history(line);
 		tokenization(line, &head, env);
+		if (head == NULL)
+			continue;
 		if (here_doc_preprocessor(head, &info) == FAIL)
 			info.exit_code = EXIT_FAILURE;
 		else
