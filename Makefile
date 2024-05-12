@@ -25,11 +25,12 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				tokenization/change_env.c			\
 				tokenization/delete_quotation.c		\
 				tokenization/ft_str.c				\
-				tokenization/ft_sub.c				\
 				tokenization/make_token.c			\
 				tokenization/token_check.c			\
 				tokenization/token_type.c			\
 				tokenization/tokenization.c			\
+				tokenization/check_open_redi.c		\
+				tokenization/remove_token.c			\
 				cd/change_dir.c
 
 OBJS	=	$(SRCS:.c=.o)
