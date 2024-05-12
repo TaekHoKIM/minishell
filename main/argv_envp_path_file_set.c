@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/11 01:11:57 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:24:40 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	file_set(t_token_list *head, t_info *info)
 	return (SUCCESS);
 }
 
-static void argv_set(t_token_list *head, t_info *info)
+void	argv_set(t_token_list *head, t_info *info)
 {
     t_token_list    *tmp;
     int             i;
