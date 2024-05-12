@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:50:48 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:46:53 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:00:30 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,3 @@ int	find_enter(char *str)
 	}
 	return (FAIL);
 }
-
-// char	*ft_strdup(char *str)
-// {
-// 	size_t	len;
-// 	size_t	i;
-// 	char	*result;
-
-// 	len = ft_strlen(str);
-// 	i = 0;
-// 	result = ft_malloc(sizeof(char), len + 1);
-// 	result[len] = '\0';
-// 	while (str[i] != '\0')
-// 	{
-// 		result[i] = str[i];
-// 		i++;
-// 	}
-// 	return (result);
-// }

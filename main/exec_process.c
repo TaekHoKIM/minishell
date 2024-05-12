@@ -6,16 +6,17 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 17:06:05 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:10:44 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	make_pipe(t_token_list *head, t_info *info)
+static int	exec_initial_settings(t_token_list *head, t_info *info)
 {
 	int	i;
 
+	signal(SIGINT, SIG_IGN);
 	while (head != NULL)
 	{
 		if (head->type == PIPE)
@@ -32,6 +33,7 @@ static int	make_pipe(t_token_list *head, t_info *info)
 			return (ft_perror("pipe"));
 		i++;
 	}
+	info->pid = ft_malloc(sizeof(pid_t), info->pipe_cnt + 1);
 	return (SUCCESS);
 }
 
@@ -47,7 +49,7 @@ void	close_fd(void)
 	DIR				*dir;
 	struct dirent	*ent;
 	int				fd;
-	
+
 	dir = opendir("/dev/fd");
 	if (dir == NULL)
 		ft_perror("opendir");
@@ -83,16 +85,15 @@ void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info, int flag)
 	}
 }
 
-void exec_process(t_token_list *head, t_envp *envp, t_info *info)
+void	exec_process(t_token_list *head, t_envp *envp, t_info *info)
 {
-    int     i;
-    i = 0;
-   if (make_pipe(head, info) == FAIL)
+	int	i;
+
+	i = 0;
+	if (exec_initial_settings(head, info) == FAIL)
 		return ;
-	info->pid = ft_malloc(sizeof(pid_t), info->pipe_cnt + 1);
-	signal(SIGINT, SIG_IGN);
-    while (i < info->pipe_cnt + 1)
-    {
+	while (i < info->pipe_cnt + 1)
+	{
 		parent_builtin(head, envp, info, PARENT);
 		info->pid[i] = fork();
 		if (info->pid[i] == FAIL)
@@ -102,12 +103,12 @@ void exec_process(t_token_list *head, t_envp *envp, t_info *info)
 		}
 		if (info->pid[i] == 0)
 			child_process(head, envp, info, i);
-        while (head != NULL && head->type != PIPE)
-            head = head->next;
-        if (head != NULL && head->type == PIPE)
-            head = head->next;
-        i++;
-    }
+		while (head != NULL && head->type != PIPE)
+			head = head->next;
+		if (head != NULL && head->type == PIPE)
+			head = head->next;
+		i++;
+	}
 	close_fd();
-    child_process_wait(info);
+	child_process_wait(info);
 }

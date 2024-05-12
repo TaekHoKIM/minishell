@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:49:52 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:46:53 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:12:00 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	here_doc_file_unlink(int here_doc_cnt)
 	int		cnt;
 	char	*filename;
 	char	*tmp;
-	
+
 	cnt = 1;
 	while (cnt <= here_doc_cnt)
 	{

@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:54:10 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 16:08:00 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:15:20 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_envp(t_envp **env, char **envp)
 	i = 0;
 	if (envp == NULL)
 		return ;
-	while(envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
 		new = ft_malloc(sizeof(tmp), 1);
 		new->line = ft_strdup(envp[i]);

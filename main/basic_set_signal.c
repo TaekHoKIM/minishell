@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:29:47 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:59:13 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:02:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	basic_sigint(int sig)
 	rl_redisplay();
 }
 
-void	bagic_set_parent_signal()
+void	bagic_set_parent_signal(void)
 {
 	signal(SIGINT, basic_sigint);
 	signal(SIGQUIT, SIG_IGN);

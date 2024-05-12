@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 17:49:21 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:15:07 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_perror(char *str)
 	return (FAIL);
 }
 
-int		ft_chdir(char *path, t_info *info)
+int	ft_chdir(char *path, t_info *info)
 {
 	if (chdir(path) == FAIL)
 	{
@@ -40,11 +40,11 @@ int		ft_chdir(char *path, t_info *info)
 	return (SUCCESS);
 }
 
-void	ctrl_d_print_exit()
+void	ctrl_d_print_exit(void)
 {
-	ft_putstr_fd("\033[1A", STDOUT_FILENO); // 현재 커서의 위치를 한칸 위로 올려줌 
-	ft_putstr_fd("\033[12C", STDOUT_FILENO); // 현재 커서의 위치를 12번째칸으로 이동
-	ft_putstr_fd("exit\n", STDOUT_FILENO); // exit를 출력
+	ft_putstr_fd("\033[1A", STDOUT_FILENO);
+	ft_putstr_fd("\033[12C", STDOUT_FILENO);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	exit(EXIT_SUCCESS);
 }
 

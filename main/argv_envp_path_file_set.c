@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 17:24:40 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:02:03 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,29 @@ static int	file_set(t_token_list *head, t_info *info)
 
 void	argv_set(t_token_list *head, t_info *info)
 {
-    t_token_list    *tmp;
-    int             i;
+	t_token_list	*tmp;
+	int				i;
 
-    tmp = head;
+	tmp = head;
 	info->cmd_cnt = 0;
-    while (tmp != NULL && tmp->type != PIPE)
-    {
-        if (tmp->type == CMD || tmp->type == ARG)
-            info->cmd_cnt++;
-        tmp = tmp->next;
-    }
-    info->argv = ft_malloc(sizeof(char *), info->cmd_cnt + 1);
-    info->argv[info->cmd_cnt] = NULL;
-    i = 0;
-    while (head != NULL && head->type != PIPE)
-    {
-        if (head->type == CMD || head->type == ARG)
-        {
-            info->argv[i] = ft_strdup(head->token);
-            i++;
-        }
-        head = head->next;
-    }
+	while (tmp != NULL && tmp->type != PIPE)
+	{
+		if (tmp->type == CMD || tmp->type == ARG)
+			info->cmd_cnt++;
+		tmp = tmp->next;
+	}
+	info->argv = ft_malloc(sizeof(char *), info->cmd_cnt + 1);
+	info->argv[info->cmd_cnt] = NULL;
+	i = 0;
+	while (head != NULL && head->type != PIPE)
+	{
+		if (head->type == CMD || head->type == ARG)
+		{
+			info->argv[i] = ft_strdup(head->token);
+			i++;
+		}
+		head = head->next;
+	}
 }
 
 static void	envp_set(t_envp *envp, t_info *info)
@@ -91,8 +91,9 @@ static void	path_set(t_envp *envp, t_info *info)
 	i = 0;
 	while (envp != NULL)
 	{
-		if (envp->line[0] == 'P' && envp->line[1] == 'A' &&
-		envp->line[2] == 'T' && envp->line[3] == 'H' && envp->line[4] == '=')
+		if (envp->line[0] == 'P' && envp->line[1] == 'A'
+			&& envp->line[2] == 'T' && envp->line[3] == 'H'
+			&& envp->line[4] == '=')
 		{
 			info->path = ft_split(envp->line + 5, ':');
 			break ;

@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 19:18:40 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/08 19:46:53 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:11:43 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	find_here_doc_and_process(t_token_list *head, t_info *info)
 			info->here_doc_cnt++;
 			tmp = ft_itoa(info->here_doc_cnt);
 			filename = ft_strjoin(".temp", tmp);
-			free(tmp);	
+			free(tmp);
 			if (here_doc(filename, head->token) == FAIL)
 				exit(EXIT_FAILURE);
 			free(filename);
@@ -90,7 +90,7 @@ static void	here_doc_token_name_change(t_token_list *head, t_info *info)
 			info->here_doc_cnt++;
 			tmp = ft_itoa(info->here_doc_cnt);
 			filename = ft_strjoin(".temp", tmp);
-			free(tmp);	
+			free(tmp);
 			free(head->token);
 			head->token = filename;
 		}
