@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/14 17:22:53 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 19:21:03 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,21 @@ void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info, int flag)
 		{
 			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
 				change_dir(head, envp, info);
-			// else if (ft_strcmp(tmp->token, "export") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "export") == SUCCESS)
+			{
+				argv_set(head, info);
+				info->exit_code = export(envp, info->argv);
+			}
 			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
 			{
 				argv_set(head, info);
 				unset(&envp, info->argv);
+				// unset은 exitcode가 다 0임
+				
 			}
 			// else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
 				
+			// #여기에서 종료코드 변경해도 최종 종료코드에 반영안됨
 		}
 		tmp = tmp->next;
 	}
@@ -113,5 +119,8 @@ void	exec_process(t_token_list *head, t_envp *envp, t_info *info)
 		i++;
 	}
 	close_fd();
+	printf("pre_exit_code:%d\n",info->exit_code);
+	// 여기에서 exitcode 변경됨
 	child_process_wait(info);
+	printf("post_exit_code:%d\n",info->exit_code);
 }
