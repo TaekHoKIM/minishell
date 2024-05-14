@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 16:45:18 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:50:28 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void	change_dir(t_token_list *head, t_envp *envp, t_info *info);
 void	pwd(void);
 void	env(t_envp *envp);
 void	unset(t_envp **envp, char **argv);
+int		export(t_envp *envp, char **argv);
 
 
 #endif
