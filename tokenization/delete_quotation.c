@@ -6,13 +6,13 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:39:07 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:24:43 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	token_change(t_token_list **head, t_envp *env)
+int	token_change(t_token_list **head, t_envp *env, int exit_code)
 {
 	char			*re_str;
 	t_token_list	*now;
@@ -25,7 +25,7 @@ int	token_change(t_token_list **head, t_envp *env)
 		if (now->type != END)
 		{
 			re_str = now->token;
-			re_str = change_env(re_str, env);
+			re_str = change_env(re_str, env, exit_code);
 			re_str = delete_q(re_str);
 			now->token = re_str;
 		}

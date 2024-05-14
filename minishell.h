@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 19:28:32 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:25:54 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		str_to_token(char *str, int start, int i, t_token_list **head);
 int		input_token(char *str, t_token_list **head);
 
 // change_env
-char	*change_env(char *str, t_envp *env);
+char	*change_env(char *str, t_envp *env, int exit_code);
 int		change_env_flag(char c, int *flag);
 char	*change_env_sub(char *str, int	*index, t_envp *env);
 int		check_special_char(char *restr, int i);
@@ -143,10 +143,10 @@ char	*delete_q_helper(char *restr, char q, int *s);
 void	delete_q_helper1(char *str, char *restr, char q, int j);
 
 // tokenization
-int		tokenization(char *str, t_token_list **head, t_envp *env);
-int		token_change(t_token_list **head, t_envp *env);
+int		tokenization(char *str, t_token_list **head, t_envp *env, int exit_code);
+int		token_change(t_token_list **head, t_envp *env, int exit_code);
 int		last_token_input(t_token_list **head);
-int		token_check(t_token_list **head, t_envp *env);
+int		token_check(t_token_list **head, t_envp *env, int exit_code);
 
 // check_open_redi
 int		check_open_redi(t_token_list **head);
@@ -168,6 +168,10 @@ void	remove_token_sub(t_token_list *now);
 int		quotation_check(char *str);
 int		is_space(char c);
 void	list_free_k(t_token_list **head, char *error_msg);
+
+// input_exit_code
+char	*input_exit_code(char *str, int exit_code, int *i);
+void	input_exit_code_sub(char *str, char *exit_str, char *re_str, int i);
 
 // ------------------------------------taekhkim-------------------------------------------
 

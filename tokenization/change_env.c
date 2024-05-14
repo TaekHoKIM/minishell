@@ -6,13 +6,13 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 19:32:30 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:23:57 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*change_env(char *str, t_envp *env)
+char	*change_env(char *str, t_envp *env, int exit_code)
 {
 	int		i;
 	int		flag;
@@ -25,7 +25,10 @@ char	*change_env(char *str, t_envp *env)
 	{
 		if (change_env_flag(re_str[i], &flag) == ON)
 		{
-			re_str = change_env_sub(re_str, &i, env);
+			if (re_str[i + 1] == '?')
+				re_str = input_exit_code(re_str, exit_code, &i);
+			else
+				re_str = change_env_sub(re_str, &i, env);
 		}
 		i++;
 	}
@@ -70,8 +73,6 @@ int	change_env_sub1(char **restr, char *temp_str, int set[2], t_envp *env)
 		idx = idx + ft_strlen(env_str) - 1;
 	}
 	free(env_str);
-	if (idx == -1)
-		return (0);
 	return (idx);
 }
 

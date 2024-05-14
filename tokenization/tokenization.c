@@ -6,13 +6,13 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 19:16:48 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:25:25 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	tokenization(char *str, t_token_list **head, t_envp *env)
+int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
 {
 	int		i;
 
@@ -34,13 +34,13 @@ int	tokenization(char *str, t_token_list **head, t_envp *env)
 		}
 		i++;
 	}
-	return (token_check(head, env));
+	return (token_check(head, env, exit_code));
 }
 
-int	token_check(t_token_list **head, t_envp *env)
+int	token_check(t_token_list **head, t_envp *env, int exit_code)
 {
 	input_type(head);
-	if (token_change(head, env) == FAIL)
+	if (token_change(head, env, exit_code) == FAIL)
 		return (FAIL);
 	if (token_typing(head) == FAIL)
 	{
