@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 19:18:40 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:11:43 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/15 00:08:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	here_doc_preprocessor(t_token_list *head, t_info *info)
 		return (ft_perror("fork"));
 	else if (here_doc_child == CHILD_PID)
 		find_here_doc_and_process(head, info);
-	signal(SIGINT, here_doc_parent_sigint);
+	signal(SIGINT, sigint_print_newline);
 	if (waitpid(here_doc_child, &status, 0) == FAIL)
 		return (ft_perror("waitpid"));
 	here_doc_child_exit_code = WEXITSTATUS(status);
