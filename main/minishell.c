@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/14 18:56:50 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:43:57 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
-static void	initial_set(t_token_list *head, t_info *info, int argc, char **argv)
+static void	initial_set(t_token_list *head, t_info *info,
+	t_envp *env, char **envp)
 {
 	info->argv = NULL;
 	info->cmd_cnt = 0;
@@ -46,8 +47,14 @@ static void	initial_set(t_token_list *head, t_info *info, int argc, char **argv)
 	set_terminal_not_print();
 	bagic_set_parent_signal();
 	head = NULL;
-	(void)argc;
-	(void)argv;
+	set_envp(&env, envp);
+}
+
+static void	finish_set(t_token_list *head, t_info *info)
+{
+	t_token_list_free(&head);
+	here_doc_file_unlink(info->here_doc_cnt);
+	info_terminal_signal_reset(info);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -57,24 +64,24 @@ int	main(int argc, char **argv, char **envp)
 	t_envp			*env;
 	t_info			info;
 
-	set_envp(&env, envp);
-	initial_set(head, &info, argc, argv);
+	(void)argc;
+	(void)argv;
+	initial_set(head, &info, env, envp);
 	while (1)
 	{
 		line = readline("minishell % ");
 		if (line == NULL)
 			ctrl_d_print_exit();
 		add_history(line);
-		tokenization(line, &head, env, info.exit_code);
+		if (tokenization(line, &head, env, info.exit_code) == FAIL)
+			continue;
 		if (head == NULL)
 			continue ;
 		if (here_doc_preprocessor(head, &info) == FAIL)
 			info.exit_code = EXIT_FAILURE;
 		else
 			exec_process(head, env, &info);
-		t_token_list_free(&head);
-		here_doc_file_unlink(info.here_doc_cnt);
-		info_terminal_signal_reset(&info);
+		finish_set(head, &info);
 	}
 	exit(EXIT_SUCCESS);
 }
