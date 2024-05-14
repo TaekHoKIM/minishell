@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:00 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 17:25:37 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:30:29 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_env(char *env, char **argv);
-
-void	unset(t_envp **envp, char **argv)
+static void	unset_env(t_envp **envp, t_envp *rm)
 {
-	t_envp	*now;
+	t_envp	*tmp;
 	t_envp	*pre;
-	t_envp	*rm;
-	char	*env;
+	t_envp	*now;
 
+	if (rm == NULL)
+		return ;
 	pre = NULL;
 	now = (*envp);
-	printf("unset\n");
 	while (now != NULL)
 	{
-		env = now->line;
-		if (check_env(env, argv) == SUCCESS)
+		if (now == rm)
 		{
-			rm = now;
-			now = now->next;
 			if (pre == NULL)
-				(*envp) = now;
+				(*envp) = now->next;
 			else
-				pre->next = now;
-			free(rm->line);
-			free(rm);
+				pre->next = now->next;
+			free(now->line);
+			free(now);
+			return ;
 		}
 		else
 			pre = now;
@@ -44,22 +40,66 @@ void	unset(t_envp **envp, char **argv)
 	}
 }
 
-static int	check_env(char *env, char **argv)
+static t_envp	*check_env(t_envp **envp, char *argv)
 {
-	int	i;
-	int	len;
+	t_envp	*tmp;
+	int		len;
 
-	i = 0;
-	while (env[i] != '=')
-		i++;
-	len = i;
-	i = 1;
-	while (argv[i] != NULL)
+	tmp = *envp;
+	while (tmp != NULL)
 	{
-		if (ft_strncmp(env, argv[i], len) == SUCCESS)
-			if (env[len] == '=' && argv[i][len] == '\0')
-				return (SUCCESS);
+		len = 0;
+		while (tmp->line[len] != '=')
+			len++;
+		if (ft_strncmp(tmp->line, argv, len) == SUCCESS)
+			if (argv[len] == '\0')
+				return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+static int	check_unset_argv(char *argv)
+{
+	int	idx;
+
+	idx = 0;
+	while (argv[idx] != '\0')
+	{
+		if (!(('A' <= argv[idx] && argv[idx] <= 'Z')
+				|| ('a' <= argv[idx] && argv[idx] <= 'z')
+				|| ('0' <= argv[idx] && argv[idx] <= '9')))
+		{
+			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+			ft_putstr_fd(argv, STDERR_FILENO);
+			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+			return (FAIL);
+		}
+		idx++;
+	}
+	return (SUCCESS);
+}
+
+int	unset(t_token_list *head, t_envp **envp, t_info *info)
+{
+	t_envp	*rm;
+	int		i;
+
+	if (info->pipe_cnt != 0)
+		return (FAIL);
+	if (*envp == NULL)
+		return (SUCCESS);
+	info->exit_code = 0;
+	i = 1;
+	argv_set(head, info);
+	while (info->argv[i] != NULL)
+	{
+		if (check_unset_argv(info->argv[i]) == SUCCESS)
+		{
+			rm = check_env(envp, info->argv[i]);
+			unset_env(envp, rm);
+		}
 		i++;
 	}
-	return (FAIL);
+	return (SUCCESS);
 }
