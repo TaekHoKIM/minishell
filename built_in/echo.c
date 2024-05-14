@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:20:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 16:12:40 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:28:41 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo(char **argv)	// 종료코드 정상 0 / 비정상 1
+// 종료코드 정상 0 / 비정상 1
+void	echo(char **argv)
 {
 	int	i;
 	int	len;
