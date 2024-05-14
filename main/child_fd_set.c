@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 19:26:21 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:04:24 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:35:28 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	first_command_fd_set(t_info	*info, int i)
 	else if (info->i_fd != STDIN && info->o_fd == STDOUT
 		&& i == info->pipe_cnt)
 		pipe_set(info->i_fd, NO_CHANGE);
+	else if (info->i_fd != STDIN && info->o_fd == STDOUT)
+		pipe_set(info->i_fd, info->pipefd[i][1]);
 	else if (info->i_fd != STDIN && info->o_fd != STDOUT)
 		pipe_set(info->i_fd, info->o_fd);
 }
