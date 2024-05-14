@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/14 19:21:03 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:37:55 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	close_fd(void)
 
 	dir = opendir("/dev/fd");
 	if (dir == NULL)
+	{
 		ft_perror("opendir");
+		return ;
+	}
 	ent = readdir(dir);
 	while (ent != NULL)
 	{
@@ -63,7 +66,7 @@ void	close_fd(void)
 	}
 }
 
-void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info, int flag)
+static void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info)
 {
 	t_token_list	*tmp;
 
@@ -103,7 +106,7 @@ void	exec_process(t_token_list *head, t_envp *envp, t_info *info)
 		return ;
 	while (i < info->pipe_cnt + 1)
 	{
-		parent_builtin(head, envp, info, PARENT);
+		parent_builtin(head, envp, info);
 		info->pid[i] = fork();
 		if (info->pid[i] == FAIL)
 		{
