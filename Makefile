@@ -7,6 +7,7 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				main/child_process.c				\
 				main/exec_process.c					\
 				main/free.c							\
+				main/ft_atoi.c						\
 				main/ft_itoa.c						\
 				main/ft_putstr_fd.c					\
 				main/ft_split.c						\
@@ -37,7 +38,8 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				built_in/change_dir.c				\
 				built_in/env.c						\
 				built_in/unset.c					\
-				built_in/export.c
+				built_in/export.c					\
+				built_in/exit.c
 
 OBJS	=	$(SRCS:.c=.o)
 
