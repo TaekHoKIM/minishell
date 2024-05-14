@@ -64,6 +64,7 @@ void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	set_terminal_print();
 	if (av_ev_path_file_set(head, envp, info) == FAIL)
 		exit(EXIT_FAILURE);
 	if (i == 0)
