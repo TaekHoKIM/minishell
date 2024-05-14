@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 18:50:28 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/15 02:27:58 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-#include <dirent.h>
+# include <dirent.h>
 
 # define CHILD_PID 0
 # define SUCCESS 0
@@ -39,8 +39,10 @@
 # define STDIN 0
 # define STDOUT 1
 # define MAX_PATH 300
-# define PARENT 2
-# define CHILD 1
+# define TRUE 1
+# define EXIT_SIGINT 130
+# define EXIT_SIGQUIT 131
+# define EXIT_ARGV_NOT_NUM 255
 
 enum	e_type
 {
@@ -130,7 +132,6 @@ char	*change_env_sub(char *str, int	*index, t_envp *env);
 int		check_special_char(char *restr, int i);
 int		change_env_sub1(char **restr, char *temp_str, int set[2], t_envp *env);
 
-
 // change_env_sub
 char	*remove_str(char *str, int start, int len);
 char	*change_str(char *str, int start, char *change_str, int len);
@@ -177,7 +178,6 @@ void	input_exit_code_sub(char *str, char *exit_str, char *re_str, int i);
 
 // ------------------------------------minyekim-------------------------------------------
 
-
 // kim_min_yeong
 
 // argv_envp_path_set.c
@@ -185,7 +185,7 @@ int		av_ev_path_file_set(t_token_list *head, t_envp *envp, t_info *info);
 void	argv_set(t_token_list *head, t_info *info);
 
 // basic_set_signal.c
-void	bagic_set_parent_signal();
+void	bagic_set_parent_signal(void);
 
 // builtin_check_exec.c
 void	builtin_check_exec(t_token_list *head, t_envp *envp, t_info *info);
@@ -208,6 +208,9 @@ void	close_fd(void);
 void	t_token_list_free(t_token_list **head);
 void	array_2d_free(void **arr);
 
+// ft_atoi.c
+int		ft_atoi(const char *str);
+
 // ft_itoa.c
 char	*ft_itoa(int n);
 
@@ -228,7 +231,7 @@ int		find_enter(char *str);
 char	*ensure_not_null(char *str);
 
 // here_doc_set_signal.c
-void	here_doc_parent_sigint(int sig);
+void	sigint_print_newline(int sig);
 void	here_doc_child_sigint(int sig);
 
 // here_doc_utils.c
@@ -245,7 +248,7 @@ int		here_doc_preprocessor(t_token_list *head, t_info *info);
 void	*ft_malloc(size_t size, size_t cnt);
 int		ft_perror(char *str);
 int		ft_chdir(char *path, t_info *info);
-void	ctrl_d_print_exit();
+void	ctrl_d_print_exit(void);
 void	info_terminal_signal_reset(t_info *info);
 
 // minishell.c
@@ -256,7 +259,7 @@ void	set_envp(t_envp **env, char **envp);
 
 // set_terminal.c
 void	set_terminal_not_print(void);
-void	reset_terminal(void);
+void	set_terminal_print(void);
 
 // wait.c
 void	child_process_wait(t_info *info);
@@ -265,11 +268,11 @@ void	child_process_wait(t_info *info);
 
 // built_in/echo.c
 void	echo(char **argv);
-void	change_dir(t_token_list *head, t_envp *envp, t_info *info);
+int		change_dir(t_token_list *head, t_envp *envp, t_info *info);
 void	pwd(void);
 void	env(t_envp *envp);
-void	unset(t_envp **envp, char **argv);
-int		export(t_envp *envp, char **argv);
-
+int		unset(t_token_list *head, t_envp **envp, t_info *info);
+int		export(t_token_list *head, t_envp *envp, t_info *info);
+int		built_exit(t_token_list *head, t_info *info);
 
 #endif
