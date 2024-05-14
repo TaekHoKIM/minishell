@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:10:44 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:22:53 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void	parent_builtin(t_token_list *head, t_envp *envp, t_info *info, int flag)
 				change_dir(head, envp, info);
 			// else if (ft_strcmp(tmp->token, "export") == SUCCESS)
 				
-			// else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
+			{
+				argv_set(head, info);
+				unset(&envp, info->argv);
+			}
 			// else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
 				
 		}

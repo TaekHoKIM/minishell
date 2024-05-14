@@ -35,18 +35,18 @@ void	builtin_check_exec(t_token_list *head, t_envp *envp, t_info *info)
 	{
 		if (tmp->type == CMD)
 		{
-			// if (ft_strcmp(tmp->token, "echo") == SUCCESS)
-				
+			if (ft_strcmp(tmp->token, "echo") == SUCCESS)
+				echo(info->argv);
 			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
 				exit(EXIT_SUCCESS);
-			// else if (ft_strcmp(tmp->token, "pwd") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "pwd") == SUCCESS)
+				pwd();
 			else if (ft_strcmp(tmp->token, "export") == SUCCESS)
 				exit(EXIT_SUCCESS);
 			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
 				exit(EXIT_SUCCESS);
-			// else if (ft_strcmp(tmp->token, "env") == SUCCESS)
-				
+			else if (ft_strcmp(tmp->token, "env") == SUCCESS)
+				env(envp);
 			else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
 				exit(EXIT_SUCCESS);
 		}
