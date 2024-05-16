@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:20:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:28:41 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:44:12 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	echo_sub(char **argv, int *i, int *n_option);
 
 // 종료코드 정상 0 / 비정상 1
 void	echo(char **argv)
@@ -25,17 +27,9 @@ void	echo(char **argv)
 	len = i;
 	if (ft_strncmp(argv[0], "echo", 5) == FAIL)
 		exit(EXIT_FAILURE);
-	i = 1;
 	n_option = OFF;
 	printf("built_in echo:");
-	while (argv[i] != NULL)
-	{
-		if (ft_strncmp(argv[i], "-n", 3) == FAIL)
-			break ;
-		else if (ft_strncmp(argv[i], "-n", 3) == SUCCESS)
-			n_option = ON;
-		i++;
-	}
+	echo_sub(argv, &i, &n_option);
 	while (argv[i] != NULL)
 	{
 		printf("%s", argv[i]);
@@ -46,4 +40,33 @@ void	echo(char **argv)
 	if (n_option == OFF)
 		printf("\n");
 	exit(EXIT_SUCCESS);
+}
+
+static void	echo_sub(char **argv, int *i, int *n_option)
+{
+	int	idx;
+	int	tmp;
+
+	idx = 1;
+	while (argv[idx] != NULL)
+	{
+		if (ft_strncmp(argv[idx], "-n", 2) == SUCCESS)
+		{
+			tmp = 2;
+			while (argv[idx][tmp] != '\0')
+			{
+				if (argv[idx][tmp] != 'n')
+					break ;
+				tmp++;
+			}
+			if (argv[idx][tmp] == '\0')
+				(*n_option) = ON;
+			else
+				break ;
+		}
+		else
+			break ;
+		idx++;
+	}
+	(*i) = idx;
 }

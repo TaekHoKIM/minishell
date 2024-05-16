@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:31:23 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:58:33 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,19 @@ int	main(int argc, char **argv, char **envp)
 			ctrl_d_print_exit();
 		add_history(line);
 		if (tokenization(line, &head, env, info.exit_code) == FAIL)
+		{
+			free(line);
+			t_token_list_free(&head);
 			continue ;
+		}
 		if (head == NULL)
 			continue ;
 		if (here_doc_preprocessor(head, &info) == FAIL)
 			info.exit_code = EXIT_FAILURE;
 		exec_process(head, env, &info);
 		finish_set(&head, &info);
+		free(info.pid);
+		free(line);
 	}
 	exit(EXIT_SUCCESS);
 }

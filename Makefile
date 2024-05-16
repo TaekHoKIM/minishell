@@ -31,7 +31,6 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				tokenization/token_type.c			\
 				tokenization/tokenization.c			\
 				tokenization/check_open_redi.c		\
-				tokenization/remove_token.c			\
 				tokenization/input_exit_code.c		\
 				built_in/echo.c						\
 				built_in/pwd.c						\

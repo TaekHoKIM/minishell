@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:27:58 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:31:58 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,8 @@ int		syntax_check_type(t_token_list **head);
 int		check_cmd(t_token_list **head);
 
 // remove_token
-int		remove_token(t_token_list **head);
-void	remove_token_sub(t_token_list *now);
+// int		remove_token(t_token_list **head);
+// void	remove_token_sub(t_token_list *now);
 
 // token_check
 int		quotation_check(char *str);

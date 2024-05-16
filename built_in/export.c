@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:36:42 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:48:13 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,3 +114,8 @@ int	export(t_token_list *head, t_envp *envp, t_info *info)
 	}
 	return (SUCCESS);
 }
+
+
+// export test=123 이후 export test하면 변경 없음 - export 단독 사용시 나오는 것 처리
+// exit 문구 위치 - 현재 실행 하는 라인의 마지막에 붙여야함 - 현재 고정으로 되어 있는 것 같음
+// unset 이후에 env 실행 되는 문제, 명령어 없는 문구 안뜨는 문제

@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 19:16:22 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:32:03 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	token_typing(t_token_list **head)
 		return (FAIL);
 	check_cmd(head);
 	check_open_redi(head);
-	remove_token(head);
+	// remove_token(head);
 	return (SUCCESS);
 }
 

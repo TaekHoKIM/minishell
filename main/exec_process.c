@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:20:00 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:58:43 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	close_fd(void)
 			close(fd);
 		ent = readdir(dir);
 	}
+	free(dir->__dd_buf);
+	free(dir);
 }
 
 static int	parent_builtin(t_token_list *head, t_envp *envp, t_info *info)
