@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 15:25:25 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:16:14 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
 	i = 0;
 	if (quotation_check(str) == FAIL)
 	{
+		free(str);
 		printf("Quotation Error\n");
 		return (FAIL);
 	}
@@ -34,6 +35,7 @@ int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
 		}
 		i++;
 	}
+	free(str);
 	return (token_check(head, env, exit_code));
 }
 
@@ -41,7 +43,11 @@ int	token_check(t_token_list **head, t_envp *env, int exit_code)
 {
 	input_type(head);
 	if (token_change(head, env, exit_code) == FAIL)
+	{
+		list_free_k(head, "Syntax Error\n");
 		return (FAIL);
+	}
+		
 	if (token_typing(head) == FAIL)
 	{
 		list_free_k(head, "Syntax Error\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:03:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:45:03 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:14:28 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	list_free_k(t_token_list **head, char *error_msg)
 	temp = *head;
 	if (temp == NULL)
 		return ;
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
 		remove = temp;
 		temp = temp->next;
