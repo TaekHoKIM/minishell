@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:15:07 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:15:08 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	ft_chdir(char *path, t_info *info)
 
 void	ctrl_d_print_exit(void)
 {
-	ft_putstr_fd("\033[1A", STDOUT_FILENO);
-	ft_putstr_fd("\033[12C", STDOUT_FILENO);
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("\033[1A", STDERR_FILENO);
+	ft_putstr_fd("\033[12C", STDERR_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	exit(EXIT_SUCCESS);
 }
 
