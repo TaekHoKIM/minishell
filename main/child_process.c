@@ -43,6 +43,8 @@ static char	*access_check(char **path, char *cmd)
 	ssize_t	i;
 
 	i = 0;
+	if (path == NULL)
+		return (cmd);
 	while (path[i] != NULL)
 	{
 		tmp = ft_strjoin(path[i], "/");
