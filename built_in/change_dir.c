@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/15 01:54:39 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:44:57 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,25 @@ static void	pwd_set(t_envp *envp, t_info *info)
 	}
 }
 
+static int	home_dir_parse_chdir(t_info *info)
+{
+	char	*path;
+	
+	if (info->argv[1][0] == '~')
+	{
+		path = ft_strjoin(info->home_dir, info->argv[1] + 1);
+		if (ft_chdir(path, info) == FAIL)
+		{
+			free(path);
+			return (FAIL);
+		}
+	}
+	else
+		if (ft_chdir(info->argv[1], info) == FAIL)
+			return (FAIL);
+	return (SUCCESS);
+}
+
 int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 {
 	char	buf[MAX_PATH];
@@ -71,11 +90,11 @@ int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 	}
 	if (info->argv[1] == NULL)
 	{
-		if (ft_chdir("/", info) == FAIL)
+		if (ft_chdir(info->home_dir, info) == FAIL)
 			return (SUCCESS);
 	}
 	else
-		if (ft_chdir(info->argv[1], info) == FAIL)
+		if (home_dir_parse_chdir(info) == FAIL)
 			return (SUCCESS);
 	old_pwd_set(envp, path);
 	pwd_set(envp, info);
