@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/16 16:31:58 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:30:03 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define EXIT_SIGINT 130
 # define EXIT_SIGQUIT 131
 # define EXIT_ARGV_NOT_NUM 255
+# define EXPORT 7
+# define ENV 8
 
 enum	e_type
 {
@@ -82,9 +84,10 @@ typedef struct s_token_list{
 	int					type;
 	char				*token;
 	struct s_token_list	*next;
-}t_token_list;
+}	t_token_list;
 
 typedef struct s_envp{
+	int				key;
 	char			*line;
 	struct s_envp	*next;
 }	t_envp;
@@ -272,6 +275,7 @@ int		change_dir(t_token_list *head, t_envp *envp, t_info *info);
 void	pwd(void);
 void	env(t_envp *envp);
 int		unset(t_token_list *head, t_envp **envp, t_info *info);
+void	export_print(t_envp *envp);
 int		export(t_token_list *head, t_envp *envp, t_info *info);
 int		built_exit(t_token_list *head, t_info *info);
 
