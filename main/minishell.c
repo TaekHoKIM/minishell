@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/17 19:09:16 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:28:46 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	initial_set(t_token_list *head, t_info *info,
 	set_terminal_not_print();
 	bagic_set_parent_signal();
 	head = NULL;
+	*env = NULL;
 	set_envp(env, envp);
 }
 
