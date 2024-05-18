@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/17 21:28:46 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:48:47 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
+static void	make_home(t_info *info)
+{
+	char	buf[MAX_PATH];
+	char	*path;
+
+	path = getcwd(buf, MAX_PATH);
+	if (path == NULL)
+	{
+		ft_perror("getcwd");
+		exit(EXIT_FAILURE);
+	}
+	info->home_dir = ft_strdup(path);
+}
+
 static void	initial_set(t_token_list *head, t_info *info,
 	t_envp **env, char **envp)
 {
@@ -44,6 +58,7 @@ static void	initial_set(t_token_list *head, t_info *info,
 	info->pipe_cnt = 0;
 	info->pipefd = NULL;
 	info->exit_code = 0;
+	make_home(info);
 	set_terminal_not_print();
 	bagic_set_parent_signal();
 	head = NULL;
@@ -68,6 +83,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	initial_set(head, &info, &env, envp);
+	printf("%s\n", info.home_dir);
 	while (1)
 	{
 		line = readline("minishell % ");
