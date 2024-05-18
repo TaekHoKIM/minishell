@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/18 19:01:44 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:49:34 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	export_insert(t_envp **envp, char *arg, int key)
 static int	add_export_list(t_envp *envp, char *arg, int len)
 {
 	t_envp	*tmp;
-	int	i;
+	int		i;
 
 	tmp = envp;
 	while (tmp != NULL)
@@ -52,7 +52,8 @@ static int	add_export_list(t_envp *envp, char *arg, int len)
 		i = 0;
 		while (tmp->line[i] != '\0' && arg[i] != '\0' && tmp->line[i] == arg[i])
 		{
-			if (tmp->line[i + 1] == '=' && arg[i + 1] == '\0')
+			if (tmp->line[i + 1] == '=' && arg[i + 1] == '\0'
+				|| tmp->line[i + 1] == '\0' && arg[i + 1] == '\0')
 				return (FAIL);
 			i++;
 		}
