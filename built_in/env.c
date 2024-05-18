@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:20:44 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:29:16 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:45:22 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	env(t_envp *envp)
 {
-	t_envp	*temp;
+	t_envp	*tmp;
 
-	temp = envp;
+	tmp = envp;
 	printf("built_in env\n");
-	while (temp != NULL)
+	while (tmp != NULL)
 	{
-		printf("%s\n", temp->line);
-		temp = temp->next;
+		if (tmp->key == ENV)
+			printf("%s\n", tmp->line);
+		tmp = tmp->next;
 	}
 	exit(EXIT_SUCCESS);
 }
