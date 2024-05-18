@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/17 21:30:03 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:06:58 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_info
 	char	**envp;
 	int		exit_code;
 	int		here_doc_cnt;
+	char	*home_dir;
 	int		i_fd;
 	int		last_child_pid;
 	int		o_fd;
