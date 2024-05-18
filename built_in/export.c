@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/16 16:48:13 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:44:35 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	export_insert(t_envp **envp, char *arg)
+static void	export_insert(t_envp **envp, char *arg, int key)
 {
 	t_envp	*tmp;
 	t_envp	*new;
@@ -32,11 +32,33 @@ static void	export_insert(t_envp **envp, char *arg)
 	}
 	new = (t_envp *)ft_malloc(sizeof(t_envp), 1);
 	new->line = ft_strdup(arg);
+	new->key = key;
 	new->next = NULL;
 	if (*envp == NULL)
 		*envp = new;
 	else
 		prev->next = new;
+}
+
+static int	add_export_list(t_envp *envp, char *arg, int len)
+{
+	t_envp	*tmp;
+	int	i;
+
+	tmp = envp;
+	while (tmp != NULL)
+	{
+		i = 0;
+		while (tmp->line[i] != '\0' && arg[i] != '\0' && tmp->line[i] == arg[i])
+		{
+			if (tmp->line[i + 1] == '=' && arg[i + 1] == '\0')
+				return (FAIL);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	export_insert(&envp, arg, EXPORT);
+	return (EXPORT);
 }
 
 static int	export_check_remove(t_envp *envp, char *arg)
@@ -48,13 +70,14 @@ static int	export_check_remove(t_envp *envp, char *arg)
 	len = 0;
 	while (arg[len] != '=' && arg[len] != '\0')
 		len++;
-	if (len == ft_strlen(arg))
-		return (FAIL);
+	if (arg[len] == '\0')
+		return (add_export_list(envp, arg, len));
 	tmp = envp;
 	while (tmp != NULL)
 	{
 		env = tmp->line;
-		if (ft_strncmp(env, arg, len + 1) == SUCCESS)
+		if (ft_strncmp(env, arg, len + 1) == SUCCESS
+			&& ft_strcmp(env, arg) == FAIL)
 		{
 			free(tmp->line);
 			tmp->line = NULL;
@@ -67,15 +90,10 @@ static int	export_check_remove(t_envp *envp, char *arg)
 
 static int	arg_check(char *argv)
 {
-	int		len;
 	int		idx;
-	char	c;
 
-	len = 0;
-	while (argv[len] != '\0' && argv[len] != '=')
-		len++;
 	idx = 0;
-	while (idx < len)
+	while (argv[idx] != '\0' && argv[idx] != '=')
 	{
 		if (!((idx == 0 && '_' == argv[idx])
 				|| ('A' <= argv[idx] && argv[idx] <= 'Z')
@@ -99,23 +117,23 @@ int	export(t_token_list *head, t_envp *envp, t_info *info)
 
 	if (info->pipe_cnt != 0)
 		return (FAIL);
-	i = 0;
+	i = 1;
 	argv_set(head, info);
 	while (info->argv[i] != NULL)
 	{
 		if (arg_check(info->argv[i]) == SUCCESS)
 		{
 			if (export_check_remove(envp, info->argv[i]) == SUCCESS)
-				export_insert(&envp, info->argv[i]);
+				export_insert(&envp, info->argv[i], ENV);
 		}
 		else
 			info->exit_code = 1;
 		i++;
 	}
+	if (i == 1)
+		export_print(envp);
 	return (SUCCESS);
 }
 
-
 // export test=123 이후 export test하면 변경 없음 - export 단독 사용시 나오는 것 처리
-// exit 문구 위치 - 현재 실행 하는 라인의 마지막에 붙여야함 - 현재 고정으로 되어 있는 것 같음
 // unset 이후에 env 실행 되는 문제, 명령어 없는 문구 안뜨는 문제
