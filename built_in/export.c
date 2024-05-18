@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/17 21:44:35 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:01:44 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	export_insert(t_envp **envp, char *arg, int key)
 		if (tmp->line == NULL)
 		{
 			tmp->line = ft_strdup(arg);
+			tmp->key = key;
 			return ;
 		}
 		prev = tmp;
@@ -76,7 +77,7 @@ static int	export_check_remove(t_envp *envp, char *arg)
 	while (tmp != NULL)
 	{
 		env = tmp->line;
-		if (ft_strncmp(env, arg, len + 1) == SUCCESS
+		if (ft_strncmp(env, arg, len) == SUCCESS
 			&& ft_strcmp(env, arg) == FAIL)
 		{
 			free(tmp->line);
