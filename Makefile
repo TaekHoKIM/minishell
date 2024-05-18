@@ -37,12 +37,13 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				built_in/change_dir.c				\
 				built_in/env.c						\
 				built_in/unset.c					\
+				built_in/export_utils.c				\
 				built_in/export.c					\
 				built_in/exit.c
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC				=	cc
+CC				=	cc -g
 # CCFLAGS			=	-Wall -Wextra -Werror
 READLINE_LINK	=	-lreadline
 
