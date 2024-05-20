@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 17:03:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/17 19:14:28 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:20:00 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	quotation_check(char *str)
 {
 	int		i;
-	int		count;
 	char	q;
 
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:09:35 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 15:23:57 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:19:49 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*change_env_sub(char *str, int	*index, t_envp *env)
 	int		set[2];
 	char	*restr;
 	char	*temp_str;
-	char	*env_str;
 
 	set[0] = *index;
 	restr = str;

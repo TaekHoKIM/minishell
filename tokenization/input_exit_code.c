@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_exit_code.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:58:09 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 15:23:51 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:20:29 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*input_exit_code(char *str, int exit_code, int *i)
 {
 	int		index;
-	int		re_str_i;
 	char	*exit_str;
 	char	*re_str;
 
@@ -38,7 +37,7 @@ void	input_exit_code_sub(char *str, char *exit_str, char *re_str, int i)
 {
 	int		str_i;
 	int		re_str_i;
-	int		temp;
+	size_t	temp;
 
 	re_str_i = i;
 	str_i = i + 2;

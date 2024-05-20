@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:00 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:30:29 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:21:31 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	unset_env(t_envp **envp, t_envp *rm)
 {
-	t_envp	*tmp;
 	t_envp	*pre;
 	t_envp	*now;
 

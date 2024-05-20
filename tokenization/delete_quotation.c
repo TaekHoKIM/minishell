@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/14 15:24:43 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:19:54 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*delete_q_helper(char *restr, char q, int *s)
 {
 	int		i;
 	int		j;
-	int		count;
 	char	*str;
 
 	i = *s + 1;
