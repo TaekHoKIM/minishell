@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/18 21:06:58 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:01:07 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_info
 	int		cmd_cnt;
 	char	**envp;
 	int		exit_code;
+	char	*first_home;
 	int		here_doc_cnt;
 	char	*home_dir;
 	int		i_fd;
@@ -270,14 +271,32 @@ void	child_process_wait(t_info *info);
 
 // ------------------------------------minyekim-------------------------------------------
 
+// built_in/change_dir_utils.c
+int		find_home_path(t_envp *envp, t_info *info);
+int 	home_not_set();
+
+// built_in/change_dir.c
+int		change_dir(t_token_list *head, t_envp *envp, t_info *info);
+
 // built_in/echo.c
 void	echo(char **argv);
-int		change_dir(t_token_list *head, t_envp *envp, t_info *info);
-void	pwd(void);
+
+// built_in/env.c
 void	env(t_envp *envp);
-int		unset(t_token_list *head, t_envp **envp, t_info *info);
-void	export_print(t_envp *envp);
-int		export(t_token_list *head, t_envp *envp, t_info *info);
+
+// built_in/exit.c
 int		built_exit(t_token_list *head, t_info *info);
+
+// built_in/export_utils.c
+void	export_print(t_envp *envp);
+
+// built_in/export.c
+int		export(t_token_list *head, t_envp *envp, t_info *info);
+
+// built_in/pwd.c
+void	pwd(void);
+
+// built_in/unset.c
+int		unset(t_token_list *head, t_envp **envp, t_info *info);
 
 #endif
