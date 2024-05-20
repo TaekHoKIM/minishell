@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/18 21:48:47 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:23:11 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,30 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
-static void	make_home(t_info *info)
+static void	make_home(t_envp **envp, t_info *info)
 {
-	char	buf[MAX_PATH];
-	char	*path;
+	t_envp	*tmp;
 
-	path = getcwd(buf, MAX_PATH);
-	if (path == NULL)
+	info->first_home = NULL;
+	tmp = *envp;
+	while (tmp != NULL)
 	{
-		ft_perror("getcwd");
-		exit(EXIT_FAILURE);
+		if (tmp->line[0] == 'H' && tmp->line[1] == 'O'
+			&& tmp->line[2] == 'M' && tmp->line[3] == 'E'
+			&& tmp->line[4] == '=')
+			info->first_home = ft_strdup(tmp->line + 5);
+		tmp = tmp->next;
 	}
-	info->home_dir = ft_strdup(path);
 }
 
-static void	initial_set(t_token_list *head, t_info *info,
+static void	initial_set(t_token_list **head, t_info *info,
 	t_envp **env, char **envp)
 {
 	info->argv = NULL;
 	info->cmd_cnt = 0;
 	info->envp = NULL;
 	info->here_doc_cnt = 0;
+	info->home_dir = NULL;
 	info->i_fd = STDIN_FILENO;
 	info->last_child_pid = 0;
 	info->o_fd = STDOUT_FILENO;
@@ -58,12 +61,12 @@ static void	initial_set(t_token_list *head, t_info *info,
 	info->pipe_cnt = 0;
 	info->pipefd = NULL;
 	info->exit_code = 0;
-	make_home(info);
 	set_terminal_not_print();
 	bagic_set_parent_signal();
-	head = NULL;
+	*head = NULL;
 	*env = NULL;
 	set_envp(env, envp);
+	make_home(env, info);
 }
 
 static void	finish_set(t_token_list **head, t_info *info)
@@ -82,8 +85,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	initial_set(head, &info, &env, envp);
-	printf("%s\n", info.home_dir);
+	initial_set(&head, &info, &env, envp);
 	while (1)
 	{
 		line = readline("minishell % ");
