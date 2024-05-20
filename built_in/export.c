@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/18 20:49:34 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:21:23 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	export_insert(t_envp **envp, char *arg, int key)
 		prev->next = new;
 }
 
-static int	add_export_list(t_envp *envp, char *arg, int len)
+static int	add_export_list(t_envp *envp, char *arg)
 {
 	t_envp	*tmp;
 	int		i;
@@ -52,8 +52,8 @@ static int	add_export_list(t_envp *envp, char *arg, int len)
 		i = 0;
 		while (tmp->line[i] != '\0' && arg[i] != '\0' && tmp->line[i] == arg[i])
 		{
-			if (tmp->line[i + 1] == '=' && arg[i + 1] == '\0'
-				|| tmp->line[i + 1] == '\0' && arg[i + 1] == '\0')
+			if ((tmp->line[i + 1] == '=' && arg[i + 1] == '\0')
+				|| (tmp->line[i + 1] == '\0' && arg[i + 1] == '\0'))
 				return (FAIL);
 			i++;
 		}
@@ -73,13 +73,13 @@ static int	export_check_remove(t_envp *envp, char *arg)
 	while (arg[len] != '=' && arg[len] != '\0')
 		len++;
 	if (arg[len] == '\0')
-		return (add_export_list(envp, arg, len));
+		return (add_export_list(envp, arg));
 	tmp = envp;
 	while (tmp != NULL)
 	{
 		env = tmp->line;
 		if (ft_strncmp(env, arg, len) == SUCCESS
-			&& ft_strcmp(env, arg) == FAIL)
+			&& arg[len] == '=' && ft_strcmp(env, arg) == FAIL)
 		{
 			free(tmp->line);
 			tmp->line = NULL;
@@ -95,7 +95,7 @@ static int	arg_check(char *argv)
 	int		idx;
 
 	idx = 0;
-	while (argv[idx] != '\0' && argv[idx] != '=')
+	while (argv[idx] != '\0' && (idx == 0 || argv[idx] != '='))
 	{
 		if (!((idx == 0 && '_' == argv[idx])
 				|| ('A' <= argv[idx] && argv[idx] <= 'Z')
@@ -115,7 +115,6 @@ static int	arg_check(char *argv)
 int	export(t_token_list *head, t_envp *envp, t_info *info)
 {
 	int	i;
-	int	flag;
 
 	if (info->pipe_cnt != 0)
 		return (FAIL);
