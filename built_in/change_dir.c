@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/18 21:48:57 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:23:45 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,49 +54,61 @@ static void	pwd_set(t_envp *envp, t_info *info)
 	}
 }
 
-static int	home_dir_parse_chdir(t_info *info)
+static int	change_dir_hame_arg(t_envp *envp, t_info *info)
 {
 	char	*path;
 
+	path = NULL;
 	if (info->argv[1][0] == '~')
 	{
-		path = ft_strjoin(info->home_dir, info->argv[1] + 1);
-		if (ft_chdir(path, info) == FAIL)
+		if (find_home_path(envp, info) != FAIL)
+			path = ft_strjoin(info->home_dir, info->argv[1] + 1);
+		else
 		{
-			free(path);
-			return (FAIL);
+			if (info->first_home == NULL)
+				return (home_not_set());
+			else
+				path = ft_strjoin(info->first_home, info->argv[1] + 1);
 		}
 	}
 	else
-		if (ft_chdir(info->argv[1], info) == FAIL)
-			return (FAIL);
+		path = info->argv[1];
+	if (ft_chdir(path, info) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+static int	dir_set(t_envp *envp, t_info *info)
+{
+	if (info->argv[1] == NULL)
+	{
+		if (find_home_path(envp, info) == FAIL)
+			return (home_not_set());
+		return (ft_chdir(info->home_dir, info));
+	}
+	if (change_dir_hame_arg(envp, info) == FAIL)
+		return (FAIL);
 	return (SUCCESS);
 }
 
 int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 {
 	char	buf[MAX_PATH];
-	char	*path;
+	char	*old_path;
 
 	if (info->pipe_cnt > 0)
 		return (FAIL);
 	argv_set(head, info);
-	path = getcwd(buf, MAX_PATH);
-	if (path == NULL)
+	old_path = getcwd(buf, MAX_PATH);
+	if (old_path == NULL)
 	{
 		ft_perror("getcwd");
 		info->exit_code = 1;
 		return (SUCCESS);
 	}
-	if (info->argv[1] == NULL)
-	{
-		if (ft_chdir(info->home_dir, info) == FAIL)
-			return (SUCCESS);
-	}
-	else
-		if (home_dir_parse_chdir(info) == FAIL)
-			return (SUCCESS);
-	old_pwd_set(envp, path);
+	if (dir_set(envp, info) == FAIL)
+		return (SUCCESS);
+	old_pwd_set(envp, old_path);
 	pwd_set(envp, info);
 	return (SUCCESS);
 }
