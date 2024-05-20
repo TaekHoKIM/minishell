@@ -32,28 +32,29 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				tokenization/tokenization.c			\
 				tokenization/check_open_redi.c		\
 				tokenization/input_exit_code.c		\
-				built_in/echo.c						\
-				built_in/pwd.c						\
+				built_in/change_dir_utils.c			\
 				built_in/change_dir.c				\
+				built_in/echo.c						\
 				built_in/env.c						\
-				built_in/unset.c					\
+				built_in/exit.c						\
 				built_in/export_utils.c				\
 				built_in/export.c					\
-				built_in/exit.c
+				built_in/pwd.c						\
+				built_in/unset.c
 
 OBJS	=	$(SRCS:.c=.o)
 
-CC				=	cc -g
-# CCFLAGS			=	-Wall -Wextra -Werror
+CC				=	cc
+CCFLAGS			=	-Wall -Wextra -Werror
 READLINE_LINK	=	-lreadline
 
 all : $(NAME)
 
 %.o : %.c
-	$(CC) -I/opt/homebrew/opt/readline/include -c $< -o $@
+	$(CC) $(CCFLAGS) -I/opt/homebrew/opt/readline/include -c $< -o $@
 
 $(NAME) : $(OBJS)
-	$(CC) $^ -o $@ $(READLINE_LINK)
+	$(CC) $(CCFLAGS) $^ -o $@ $(READLINE_LINK)
 
 clean :
 	rm -f $(OBJS)
