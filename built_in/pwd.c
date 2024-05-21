@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:11:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/15 02:29:58 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:59:20 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	pwd(void)
 
 	if (getcwd(dir, sizeof(dir)) == NULL)
 		exit(EXIT_FAILURE);
-	printf("built_in pwd:");
 	printf("%s\n", dir);
 	exit(EXIT_SUCCESS);
 }

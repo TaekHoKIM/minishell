@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:20:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/16 16:44:12 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:58:55 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	echo(char **argv)
 	if (ft_strncmp(argv[0], "echo", 5) == FAIL)
 		exit(EXIT_FAILURE);
 	n_option = OFF;
-	printf("built_in echo:");
 	echo_sub(argv, &i, &n_option);
 	while (argv[i] != NULL)
 	{
