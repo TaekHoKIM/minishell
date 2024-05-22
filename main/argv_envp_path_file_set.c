@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv_envp_path_file_set.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:39:23 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/12 18:02:03 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:17:38 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	file_set(t_token_list *head, t_info *info)
 	tmp = head;
 	while (tmp != NULL && tmp->type != PIPE)
 	{
-		if (tmp->type == IN_OPEN_D1 || tmp->type == IN_OPEN_D2)
+		if (tmp->type == IN_OPEN_D1 || tmp->type == IN_OPEN_D2
+			|| tmp->type == IN_D1_ARG)
 			info->i_fd = open(tmp->token, O_RDONLY);
 		else if (tmp->type == OUT_OPEN_D1 || tmp->type == OUT_D1_ARG)
 			info->o_fd = open(tmp->token, O_WRONLY | O_CREAT | O_TRUNC, 0644);
