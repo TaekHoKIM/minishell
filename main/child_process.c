@@ -23,7 +23,26 @@ static int	check_cmd_or_path(char *cmd)
 			return (FAIL);
 		i++;
 	}
+	if (i == 0)
+		return (SUCCESS);
 	return (SUCCESS);
+}
+
+static int	accsess_and_file(char *path)
+{
+	struct stat	path_stat;
+
+	if (access(path, F_OK | X_OK) == 0)
+	{
+		if (stat(path, &path_stat) == FAIL)
+		{
+			perror("minishell:");
+			exit(errno);
+		}
+		if (S_ISDIR(path_stat.st_mode) == SUCCESS)
+			return (SUCCESS);
+	}
+	return (FAIL);
 }
 
 static void	exit_command_not_found(char *cmd)
@@ -43,7 +62,7 @@ static void	check_file_or_dir(char *path)
 		perror("minishell:");
 		exit(errno);
 	}
-	if (S_ISDIR(path_stat.st_mode))
+	if (S_ISDIR(path_stat.st_mode) != SUCCESS)
 	{
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
@@ -67,7 +86,7 @@ static char	*access_check(char **path, char *cmd)
 			tmp = ft_strjoin(path[i], "/");
 			res = ft_strjoin(tmp, cmd);
 			free(tmp);
-			if (access(res, F_OK | X_OK) == 0)
+			if (accsess_and_file(res) == SUCCESS)
 				return (res);
 			free(res);
 			i++;

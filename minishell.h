@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/22 16:06:48 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:34:44 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,15 @@ void	change_str1(char *str, char *re_str, char *change_str, int set[2]);
 char	*user_getenv(char *str, t_envp *env);
 
 // delete_quotation
+int		token_change_env(t_token_list **head, t_envp *env, int exit_code);
+int		token_change_qutation(t_token_list **head);
 char	*delete_q(char *restr);
 char	*delete_q_helper(char *restr, char q, int *s);
 void	delete_q_helper1(char *str, char *restr, char q, int j);
 
 // tokenization
 int		tokenization(char *str, t_token_list **head, t_envp *env, int exit_code);
-int		token_change(t_token_list **head, t_envp *env, int exit_code);
+
 int		last_token_input(t_token_list **head);
 int		token_check(t_token_list **head, t_envp *env, int exit_code);
 
@@ -169,8 +171,8 @@ int		syntax_check_type(t_token_list **head);
 int		check_cmd(t_token_list **head);
 
 // remove_token
-// int		remove_token(t_token_list **head);
-// void	remove_token_sub(t_token_list *now);
+int		remove_token(t_token_list **head);
+void	remove_token_sub(t_token_list *now);
 
 // token_check
 int		quotation_check(char *str);
