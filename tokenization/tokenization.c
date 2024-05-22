@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/22 15:27:34 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:58:54 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,10 @@ int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
 int	token_check(t_token_list **head, t_envp *env, int exit_code)
 {
 	input_type(head);
-	if (token_change(head, env, exit_code) == FAIL)
-	{
-		list_free_k(head, "Syntax Error\n");
-		return (FAIL);
-	}
+	token_change_env(head, env, exit_code);
+	remove_token(head);
+	input_type(head);
+	token_change_qutation(head);
 	if (token_typing(head) == FAIL)
 	{
 		list_free_k(head, "Syntax Error\n");

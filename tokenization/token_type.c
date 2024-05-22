@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:20:07 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:30:18 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	token_typing(t_token_list **head)
 		return (FAIL);
 	check_cmd(head);
 	check_open_redi(head);
-	// remove_token(head);
 	return (SUCCESS);
 }
 
