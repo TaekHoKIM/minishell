@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:01:07 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:06:48 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <dirent.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 # define CHILD_PID 0
 # define SUCCESS 0
@@ -200,10 +202,11 @@ int		ft_strcmp(char *s1, char *s2);
 void	first_command_fd_set(t_info	*info, int i);
 void	last_command_fd_set(t_info *info, int i);
 void	middle_command_fd_set(t_info *info, int i);
+void	pipe_set(int i_fd, int o_fd);
 
 // child_process.c
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i);
-void	pipe_set(int i_fd, int o_fd);
+
 
 // exec_process.c
 void	exec_process(t_token_list *head, t_envp *envp, t_info *info);

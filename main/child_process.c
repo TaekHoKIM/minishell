@@ -12,28 +12,45 @@
 
 #include "../minishell.h"
 
-void	pipe_set(int i_fd, int o_fd)
+static int	check_cmd_or_path(char *cmd)
 {
-	if (i_fd != NO_CHANGE && dup2(i_fd, STDIN_FILENO) == FAIL)
+	int	i;
+
+	i = 0;
+	while (cmd[i] != '\0')
 	{
-		ft_perror("dup2");
-		exit(EXIT_FAILURE);
+		if (cmd[i] == '/')
+			return (FAIL);
+		i++;
 	}
-	if (o_fd != NO_CHANGE && dup2(o_fd, STDOUT_FILENO) == FAIL)
+	return (SUCCESS);
+}
+
+static void	exit_command_not_found(char *cmd)
+{
+	write(2, "minishell: ", 12);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": command not found\n", 21);
+	exit(127);
+}
+
+static void	check_file_or_dir(char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) == FAIL)
 	{
-		ft_perror("dup2");
-		exit(EXIT_FAILURE);
+		perror("minishell:");
+		exit(errno);
 	}
-	if (i_fd != NO_CHANGE && close(i_fd) == FAIL)
+	if (S_ISDIR(path_stat.st_mode))
 	{
-		ft_perror("close");
-		exit(EXIT_FAILURE);
+		write(2, "minishell: ", 11);
+		write(2, path, ft_strlen(path));
+		write(2, ": is a directory\n", 18);
+		exit(126);
 	}
-	if (o_fd != NO_CHANGE && close(o_fd) == FAIL)
-	{
-		ft_perror("close");
-		exit(EXIT_FAILURE);
-	}
+	return ;
 }
 
 static char	*access_check(char **path, char *cmd)
@@ -43,20 +60,25 @@ static char	*access_check(char **path, char *cmd)
 	ssize_t	i;
 
 	i = 0;
-	if (path == NULL)
-		return (cmd);
-	while (path[i] != NULL)
+	if (check_cmd_or_path(cmd) == SUCCESS && path != NULL)
 	{
-		tmp = ft_strjoin(path[i], "/");
-		res = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(res, F_OK | X_OK) == 0)
-			return (res);
-		free(res);
-		i++;
+		while (path[i] != NULL)
+		{
+			tmp = ft_strjoin(path[i], "/");
+			res = ft_strjoin(tmp, cmd);
+			free(tmp);
+			if (access(res, F_OK | X_OK) == 0)
+				return (res);
+			free(res);
+			i++;
+		}
+		exit_command_not_found(cmd);
 	}
 	if (access(cmd, F_OK | X_OK) == 0)
+	{
+		check_file_or_dir(cmd);
 		return (cmd);
+	}
 	return (cmd);
 }
 
