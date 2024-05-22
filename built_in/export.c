@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:21:23 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:08:07 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,19 @@ static int	arg_check(char *argv)
 	int		idx;
 
 	idx = 0;
+	if ('0' <= argv[0] && argv[0] <= '9')
+	{
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(argv, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		return (FAIL);
+	}
 	while (argv[idx] != '\0' && (idx == 0 || argv[idx] != '='))
 	{
-		if (!((idx == 0 && '_' == argv[idx])
-				|| ('A' <= argv[idx] && argv[idx] <= 'Z')
+		if (!(('A' <= argv[idx] && argv[idx] <= 'Z')
 				|| ('a' <= argv[idx] && argv[idx] <= 'z')
-				|| ('0' <= argv[idx] && argv[idx] <= '9')))
+				|| ('0' <= argv[idx] && argv[idx] <= '9')
+				|| ('_' == argv[idx])))
 		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(argv, STDERR_FILENO);
