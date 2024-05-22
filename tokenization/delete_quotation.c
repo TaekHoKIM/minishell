@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:19:54 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:26:17 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	token_change(t_token_list **head, t_envp *env, int exit_code)
 		return (FAIL);
 	while (now != NULL)
 	{
-		if (now->type != END)
+		if (now->type != END && now->type != IN_D2_ARG)
 		{
 			re_str = now->token;
 			re_str = change_env(re_str, env, exit_code);

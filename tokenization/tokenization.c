@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/17 19:16:14 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:27:34 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	token_check(t_token_list **head, t_envp *env, int exit_code)
 		list_free_k(head, "Syntax Error\n");
 		return (FAIL);
 	}
-		
 	if (token_typing(head) == FAIL)
 	{
 		list_free_k(head, "Syntax Error\n");
