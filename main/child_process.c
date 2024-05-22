@@ -69,6 +69,11 @@ static void	check_file_or_dir(char *path)
 		write(2, ": is a directory\n", 18);
 		exit(126);
 	}
+	if (access(path, X_OK) != SUCCESS)
+	{
+		ft_perror(path);
+		exit(126);
+	}
 	return ;
 }
 
@@ -93,12 +98,13 @@ static char	*access_check(char **path, char *cmd)
 		}
 		exit_command_not_found(cmd);
 	}
-	if (access(cmd, F_OK | X_OK) == 0)
+	if (access(cmd, F_OK) == SUCCESS)
 	{
 		check_file_or_dir(cmd);
 		return (cmd);
 	}
-	return (cmd);
+	ft_perror(cmd);
+	exit(127);
 }
 
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i)
