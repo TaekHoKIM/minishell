@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 19:18:40 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:47:53 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:51:15 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	here_doc_preprocessor(t_token_list *head, t_info *info)
 	if (waitpid(here_doc_child, &status, 0) == FAIL)
 		return (ft_perror("waitpid"));
 	here_doc_child_exit_code = WEXITSTATUS(status);
-	exit_code = here_doc_child_exit_code;
+	g_exit_code = here_doc_child_exit_code;
 	if (here_doc_child_exit_code != EXIT_SUCCESS)
 		return (FAIL);
 	here_doc_token_name_change(head, info);

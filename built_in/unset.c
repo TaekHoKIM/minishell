@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:00 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:47:44 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:51:05 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	unset(t_token_list *head, t_envp **envp, t_info *info)
 		return (FAIL);
 	if (*envp == NULL)
 		return (SUCCESS);
-	exit_code = 0;
+	g_exit_code = 0;
 	i = 1;
 	argv_set(head, info);
 	while (info->argv[i] != NULL)

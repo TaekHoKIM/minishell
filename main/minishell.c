@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:57:50 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:51:42 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
 
-int	exit_code;
+int	g_exit_code;
 
 static void	make_home(t_envp **envp, t_info *info)
 {
@@ -62,7 +62,7 @@ static void	initial_set(t_token_list **head, t_info *info,
 	info->pid = NULL;
 	info->pipe_cnt = 0;
 	info->pipefd = NULL;
-	exit_code = 0;
+	g_exit_code = 0;
 	set_terminal_not_print();
 	bagic_set_parent_signal();
 	*head = NULL;
@@ -94,10 +94,10 @@ int	main(int argc, char **argv, char **envp)
 		if (line == NULL)
 			ctrl_d_print_exit();
 		add_history(line);
-		if (tokenization(line, &head, env, exit_code) == FAIL)
+		if (tokenization(line, &head, env, g_exit_code) == FAIL)
 			continue ;
 		if (here_doc_preprocessor(head, &info) == FAIL)
-			exit_code = EXIT_FAILURE;
+			g_exit_code = EXIT_FAILURE;
 		exec_process(head, env, &info);
 		finish_set(&head, &info);
 	}

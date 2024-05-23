@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 21:44:18 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:50:41 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define ENV 8
 # define DIRECTORY 126
 
-extern int	exit_code;
+extern int	g_exit_code;
 
 enum	e_type
 {
@@ -220,7 +220,7 @@ void	t_token_list_free(t_token_list **head);
 void	array_2d_free(void **arr);
 
 // ft_atoi.c
-int		ft_atoi(const char *str);
+int		ft_atoi(const char *str, int *check);
 
 // ft_itoa.c
 char	*ft_itoa(int n);

@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:47:38 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:51:00 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	export(t_token_list *head, t_envp *envp, t_info *info)
 				export_insert(&envp, info->argv[i], ENV);
 		}
 		else
-			exit_code = 1;
+			g_exit_code = 1;
 		i++;
 	}
 	if (i == 1)
