@@ -6,13 +6,13 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:47:31 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:08:59 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	old_pwd_set(t_envp *envp, char *pwd)
+static void	old_pwd_set(t_envp *envp, char *old_path)
 {
 	while (envp != NULL)
 	{
@@ -22,25 +22,18 @@ static void	old_pwd_set(t_envp *envp, char *pwd)
 			&& envp->line[6] == '=')
 		{
 			free(envp->line);
-			envp->line = ft_strjoin("OLDPWD=", pwd);
+			envp->line = ft_strjoin("OLDPWD=", old_path);
 			break ;
 		}
 		envp = envp->next;
 	}
 }
 
-static void	pwd_set(t_envp *envp, t_info *info)
+static void	pwd_set(t_envp *envp)
 {
-	char	buf[MAX_PATH];
-	char	*path;
+	char	path[PATH_MAX];
 
-	path = getcwd(buf, MAX_PATH);
-	if (path == NULL)
-	{
-		ft_perror("getcwd");
-		exit_code = 1;
-		return ;
-	}
+	getcwd(path, PATH_MAX);
 	while (envp != NULL)
 	{
 		if (envp->line[0] == 'P' && envp->line[1] == 'W'
@@ -54,7 +47,7 @@ static void	pwd_set(t_envp *envp, t_info *info)
 	}
 }
 
-static int	change_dir_hame_arg(t_envp *envp, t_info *info)
+static int	change_dir_home_arg(t_envp *envp, t_info *info)
 {
 	char	*path;
 
@@ -73,7 +66,7 @@ static int	change_dir_hame_arg(t_envp *envp, t_info *info)
 	}
 	else
 		path = info->argv[1];
-	if (ft_chdir(path, info) == FAIL)
+	if (ft_chdir(path) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -84,31 +77,24 @@ static int	dir_set(t_envp *envp, t_info *info)
 	{
 		if (find_home_path(envp, info) == FAIL)
 			return (home_not_set());
-		return (ft_chdir(info->home_dir, info));
+		return (ft_chdir(info->home_dir));
 	}
-	if (change_dir_hame_arg(envp, info) == FAIL)
+	if (change_dir_home_arg(envp, info) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }
 
 int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 {
-	char	buf[MAX_PATH];
-	char	*old_path;
+	char	old_path[PATH_MAX];
 
 	if (info->pipe_cnt > 0)
 		return (FAIL);
 	argv_set(head, info);
-	old_path = getcwd(buf, MAX_PATH);
-	if (old_path == NULL)
-	{
-		ft_perror("getcwd");
-		exit_code = 1;
-		return (SUCCESS);
-	}
+	getcwd(old_path, PATH_MAX);
 	if (dir_set(envp, info) == FAIL)
 		return (SUCCESS);
 	old_pwd_set(envp, old_path);
-	pwd_set(envp, info);
+	pwd_set(envp);
 	return (SUCCESS);
 }
