@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:53:22 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:44:18 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <errno.h>
+# include <sys/syslimits.h>
 
 # define CHILD_PID 0
 # define SUCCESS 0
@@ -34,13 +35,11 @@
 # define Q 4
 # define YES_LIMITER 5
 # define NO_LIMITER 6
-# define OPEN_MAX 256
 # define SIGINT_EXIT_CODE 1
 # define NO_CHANGE -1
 # define CMD_NOT_FOUND 127
 # define STDIN 0
 # define STDOUT 1
-# define MAX_PATH 300
 # define TRUE 1
 # define EXIT_SIGINT 130
 # define EXIT_SIGQUIT 131
@@ -259,7 +258,7 @@ int		here_doc_preprocessor(t_token_list *head, t_info *info);
 // minishell_utils.c
 void	*ft_malloc(size_t size, size_t cnt);
 int		ft_perror(char *str);
-int		ft_chdir(char *path, t_info *info);
+int		ft_chdir(char *path);
 void	ctrl_d_print_exit(void);
 void	info_terminal_signal_reset(t_info *info);
 
@@ -301,7 +300,7 @@ void	export_print(t_envp *envp);
 int		export(t_token_list *head, t_envp *envp, t_info *info);
 
 // built_in/pwd.c
-void	pwd(void);
+void	pwd(t_envp *envp);
 
 // built_in/unset.c
 int		unset(t_token_list *head, t_envp **envp, t_info *info);
