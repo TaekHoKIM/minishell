@@ -32,7 +32,7 @@ static int	accsess_and_file(char *path)
 {
 	struct stat	path_stat;
 
-	if (access(path, F_OK | X_OK) == 0)
+	if (access(path, F_OK | X_OK) == SUCCESS)
 	{
 		if (stat(path, &path_stat) == FAIL)
 		{
@@ -50,7 +50,7 @@ static void	exit_command_not_found(char *cmd)
 	write(2, "minishell: ", 12);
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": command not found\n", 21);
-	exit(127);
+	exit(CMD_NOT_FOUND);
 }
 
 static void	check_file_or_dir(char *path)
@@ -67,12 +67,12 @@ static void	check_file_or_dir(char *path)
 		write(2, "minishell: ", 11);
 		write(2, path, ft_strlen(path));
 		write(2, ": is a directory\n", 18);
-		exit(126);
+		exit(DIRECTORY);
 	}
 	if (access(path, X_OK) != SUCCESS)
 	{
 		ft_perror(path);
-		exit(126);
+		exit(DIRECTORY);
 	}
 	return ;
 }
@@ -104,7 +104,7 @@ static char	*access_check(char **path, char *cmd)
 		return (cmd);
 	}
 	ft_perror(cmd);
-	exit(127);
+	exit(CMD_NOT_FOUND);
 }
 
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i)
