@@ -40,7 +40,7 @@ void	builtin_check_exec(t_token_list *head, t_envp *envp, t_info *info)
 			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
 				exit(EXIT_SUCCESS);
 			else if (ft_strcmp(tmp->token, "pwd") == SUCCESS)
-				pwd();
+				pwd(envp);
 			else if (ft_strcmp(tmp->token, "export") == SUCCESS)
 				exit(EXIT_SUCCESS);
 			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
