@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 20:48:01 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:41:01 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_perror(char *str)
 	return (FAIL);
 }
 
-int	ft_chdir(char *path, t_info *info)
+int	ft_chdir(char *path)
 {
 	if (chdir(path) == FAIL)
 	{
