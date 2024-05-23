@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/22 16:34:44 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:53:22 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@
 # define EXIT_ARGV_NOT_NUM 255
 # define EXPORT 7
 # define ENV 8
+# define DIRECTORY 126
+
+extern int	exit_code;
 
 enum	e_type
 {
@@ -100,7 +103,6 @@ typedef struct s_info
 	int		builtin;
 	int		cmd_cnt;
 	char	**envp;
-	int		exit_code;
 	char	*first_home;
 	int		here_doc_cnt;
 	char	*home_dir;

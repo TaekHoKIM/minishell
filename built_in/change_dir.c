@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:23:45 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:47:31 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	pwd_set(t_envp *envp, t_info *info)
 	if (path == NULL)
 	{
 		ft_perror("getcwd");
-		info->exit_code = 1;
+		exit_code = 1;
 		return ;
 	}
 	while (envp != NULL)
@@ -103,7 +103,7 @@ int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 	if (old_path == NULL)
 	{
 		ft_perror("getcwd");
-		info->exit_code = 1;
+		exit_code = 1;
 		return (SUCCESS);
 	}
 	if (dir_set(envp, info) == FAIL)

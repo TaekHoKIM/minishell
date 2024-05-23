@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:23:11 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:48:07 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 // 정상 작동 안 하는 명령어들
 // ls -l > outfile | cat /dev/urandom | cat | rm -rf outfile
 // 위 명령어 같은 경우 bash에서는 정상 종료, 하지만 우리는 무한 루프에 걸림.
+
+int	exit_code;
 
 static void	make_home(t_envp **envp, t_info *info)
 {
@@ -60,7 +62,7 @@ static void	initial_set(t_token_list **head, t_info *info,
 	info->pid = NULL;
 	info->pipe_cnt = 0;
 	info->pipefd = NULL;
-	info->exit_code = 0;
+	exit_code = 0;
 	set_terminal_not_print();
 	bagic_set_parent_signal();
 	*head = NULL;
