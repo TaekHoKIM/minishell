@@ -3,21 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:11:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/21 17:59:20 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:11:15 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd(void)
+void	pwd(t_envp *envp)
 {
-	char	dir[4096];
+	char	pwd[PATH_MAX];
+	int		flag;
 
-	if (getcwd(dir, sizeof(dir)) == NULL)
-		exit(EXIT_FAILURE);
-	printf("%s\n", dir);
+	flag = 0;
+	while (envp != NULL)
+	{
+		if (envp->line[0] == 'P' && envp->line[1] == 'W'
+			&& envp->line[2] == 'D' && envp->line[3] == '=')
+		{
+			printf("%s\n", envp->line + 4);
+			printf("1\n");
+			flag = 1;
+			break ;
+		}
+		envp = envp->next;
+	}
+	if (flag == 0)
+	{
+		getcwd(pwd, PATH_MAX);
+		printf("2\n");
+		printf("%s\n", pwd);
+	}
 	exit(EXIT_SUCCESS);
 }
