@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:11:28 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 22:11:15 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:24:24 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	pwd(t_envp *envp)
 			&& envp->line[2] == 'D' && envp->line[3] == '=')
 		{
 			printf("%s\n", envp->line + 4);
-			printf("1\n");
 			flag = 1;
 			break ;
 		}
@@ -33,7 +32,6 @@ void	pwd(t_envp *envp)
 	if (flag == 0)
 	{
 		getcwd(pwd, PATH_MAX);
-		printf("2\n");
 		printf("%s\n", pwd);
 	}
 	exit(EXIT_SUCCESS);
