@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_dir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 02:57:29 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 22:08:59 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:23:53 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,13 @@ int	change_dir(t_token_list *head, t_envp *envp, t_info *info)
 	if (info->pipe_cnt > 0)
 		return (FAIL);
 	argv_set(head, info);
-	getcwd(old_path, PATH_MAX);
 	if (dir_set(envp, info) == FAIL)
 		return (SUCCESS);
+	if (getcwd(old_path, PATH_MAX) == NULL)
+	{
+		write(2, "cd: error retrieving current directory: ", 41);
+		perror("getcwd: cannot access parent directories");
+	}
 	old_pwd_set(envp, old_path);
 	pwd_set(envp);
 	return (SUCCESS);
