@@ -4,6 +4,7 @@ SRCS		=	main/argv_envp_path_file_set.c		\
 				main/basic_set_signal.c				\
 				main/builtin_check_and_exec.c		\
 				main/child_fd_set.c					\
+				main/child_process_sub.c			\
 				main/child_process.c				\
 				main/exec_process.c					\
 				main/free.c							\

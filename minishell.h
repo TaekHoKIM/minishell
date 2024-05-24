@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 23:50:41 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:46:02 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ void	delete_q_helper1(char *str, char *restr, char q, int j);
 
 // tokenization
 int		tokenization(char *str, t_token_list **head, t_envp *env, int exit_code);
-
 int		last_token_input(t_token_list **head);
 int		token_check(t_token_list **head, t_envp *env, int exit_code);
 
@@ -206,6 +205,9 @@ void	first_command_fd_set(t_info	*info, int i);
 void	last_command_fd_set(t_info *info, int i);
 void	middle_command_fd_set(t_info *info, int i);
 void	pipe_set(int i_fd, int o_fd);
+
+// child_process_sub.c
+char	*access_check(char **path, char *cmd);
 
 // child_process.c
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i);
