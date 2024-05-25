@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 23:51:00 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:41:30 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static int	arg_check(char *argv)
 	return (SUCCESS);
 }
 
-int	export(t_token_list *head, t_envp *envp, t_info *info)
+int	export(t_token_list *head, t_envp **envp, t_info *info)
 {
 	int	i;
 
@@ -131,15 +131,15 @@ int	export(t_token_list *head, t_envp *envp, t_info *info)
 	{
 		if (arg_check(info->argv[i]) == SUCCESS)
 		{
-			if (export_check_remove(envp, info->argv[i]) == SUCCESS)
-				export_insert(&envp, info->argv[i], ENV);
+			if (export_check_remove(*envp, info->argv[i]) == SUCCESS)
+				export_insert(envp, info->argv[i], ENV);
 		}
 		else
 			g_exit_code = 1;
 		i++;
 	}
 	if (i == 1)
-		export_print(envp);
+		export_print(*envp);
 	return (SUCCESS);
 }
 
