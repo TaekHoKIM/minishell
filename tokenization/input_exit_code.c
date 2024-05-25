@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:58:09 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/20 19:20:29 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:26:39 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*input_exit_code(char *str, int exit_code, int *i)
 	input_exit_code_sub(str, exit_str, re_str, *i);
 	(*i) = (*i) + ft_strlen(exit_str) - 1;
 	free(str);
+	free(exit_str);
 	return (re_str);
 }
 
