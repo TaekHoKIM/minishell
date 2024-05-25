@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:41 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 23:51:42 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:54:26 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,8 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		if (tokenization(line, &head, env, g_exit_code) == FAIL)
 			continue ;
-		if (here_doc_preprocessor(head, &info) == FAIL)
-			g_exit_code = EXIT_FAILURE;
-		exec_process(head, env, &info);
+		if (here_doc_preprocessor(head, &info) != FAIL)
+			exec_process(head, &env, &info);
 		finish_set(&head, &info);
 	}
 	exit(EXIT_SUCCESS);
