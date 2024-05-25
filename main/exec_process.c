@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:25:01 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/16 15:58:43 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:25:20 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ void	close_fd(void)
 			close(fd);
 		ent = readdir(dir);
 	}
-	free(dir->__dd_buf);
-	free(dir);
+	closedir(dir);
 }
 
-static int	parent_builtin(t_token_list *head, t_envp *envp, t_info *info)
+static int	parent_builtin(t_token_list *head, t_envp **envp, t_info *info)
 {
 	t_token_list	*tmp;
 
@@ -78,11 +77,11 @@ static int	parent_builtin(t_token_list *head, t_envp *envp, t_info *info)
 		if (tmp->type == CMD)
 		{
 			if (ft_strcmp(tmp->token, "cd") == SUCCESS)
-				return (change_dir(head, envp, info));
+				return (change_dir(head, *envp, info));
 			else if (ft_strcmp(tmp->token, "export") == SUCCESS)
 				return (export(head, envp, info));
 			else if (ft_strcmp(tmp->token, "unset") == SUCCESS)
-				return (unset(head, &envp, info));
+				return (unset(head, envp, info));
 			else if (ft_strcmp(tmp->token, "exit") == SUCCESS)
 				return (built_exit(head, info));
 		}
@@ -91,7 +90,7 @@ static int	parent_builtin(t_token_list *head, t_envp *envp, t_info *info)
 	return (FAIL);
 }
 
-void	exec_process(t_token_list *head, t_envp *envp, t_info *info)
+void	exec_process(t_token_list *head, t_envp **envp, t_info *info)
 {
 	int	i;
 
@@ -109,7 +108,7 @@ void	exec_process(t_token_list *head, t_envp *envp, t_info *info)
 			return ;
 		}
 		if (info->pid[i] == 0)
-			child_process(head, envp, info, i);
+			child_process(head, *envp, info, i);
 		while (head != NULL && head->type != PIPE)
 			head = head->next;
 		if (head != NULL && head->type == PIPE)
