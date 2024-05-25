@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/24 15:46:02 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:40:39 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i);
 
 
 // exec_process.c
-void	exec_process(t_token_list *head, t_envp *envp, t_info *info);
+void	exec_process(t_token_list *head, t_envp **envp, t_info *info);
 void	close_fd(void);
 
 // free.c
@@ -299,7 +299,7 @@ int		built_exit(t_token_list *head, t_info *info);
 void	export_print(t_envp *envp);
 
 // built_in/export.c
-int		export(t_token_list *head, t_envp *envp, t_info *info);
+int		export(t_token_list *head, t_envp **envp, t_info *info);
 
 // built_in/pwd.c
 void	pwd(t_envp *envp);
