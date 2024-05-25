@@ -6,11 +6,18 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:31:00 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/23 23:51:05 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:36:30 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	valid_identifier(char *argv)
+{
+	ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+	ft_putstr_fd(argv, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+}
 
 static void	unset_env(t_envp **envp, t_envp *rm)
 {
@@ -33,8 +40,7 @@ static void	unset_env(t_envp **envp, t_envp *rm)
 			free(now);
 			return ;
 		}
-		else
-			pre = now;
+		pre = now;
 		now = now->next;
 	}
 }
@@ -48,7 +54,7 @@ static t_envp	*check_env(t_envp **envp, char *argv)
 	while (tmp != NULL)
 	{
 		len = 0;
-		while (tmp->line[len] != '=')
+		while (tmp->line[len] != '=' && tmp->line[len] != '\0')
 			len++;
 		if (ft_strncmp(tmp->line, argv, len) == SUCCESS)
 			if (argv[len] == '\0')
@@ -63,15 +69,18 @@ static int	check_unset_argv(char *argv)
 	int	idx;
 
 	idx = 0;
+	if ('0' <= argv[idx] && argv[idx] <= '9')
+	{
+		valid_identifier(argv);
+		return (FAIL);
+	}
 	while (argv[idx] != '\0')
 	{
-		if (!(('A' <= argv[idx] && argv[idx] <= 'Z')
+		if (!(argv[idx] == '_' || ('A' <= argv[idx] && argv[idx] <= 'Z')
 				|| ('a' <= argv[idx] && argv[idx] <= 'z')
 				|| ('0' <= argv[idx] && argv[idx] <= '9')))
 		{
-			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-			ft_putstr_fd(argv, STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+			valid_identifier(argv);
 			return (FAIL);
 		}
 		idx++;
