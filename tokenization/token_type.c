@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/26 12:41:22 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:05:38 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,12 @@ int	syntax_check_type(t_token_list **head)
 	t_token_list	*now;
 
 	now = (*head);
+	if (now == NULL)
+		return (SUCCESS);
 	if (now->type == PIPE)
 		return (FAIL);
 	pre_type = NONE;
+	now_type = NONE;
 	while (now != NULL)
 	{
 		now_type = now->type;
