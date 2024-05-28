@@ -6,7 +6,7 @@
 /*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:26:05 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/25 20:41:30 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:56:28 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,3 @@ int	export(t_token_list *head, t_envp **envp, t_info *info)
 		export_print(*envp);
 	return (SUCCESS);
 }
-
-// export test=123 이후 export test하면 변경 없음 - export 단독 사용시 나오는 것 처리
-// unset 이후에 env 실행 되는 문제, 명령어 없는 문구 안뜨는 문제

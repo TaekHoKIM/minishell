@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:20:36 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/21 17:58:55 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:56:24 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	echo_sub(char **argv, int *i, int *n_option);
 
-// 종료코드 정상 0 / 비정상 1
 void	echo(char **argv)
 {
 	int	i;
