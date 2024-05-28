@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:32:47 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/28 16:05:49 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:54:28 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
+int	tokenization(char *str, t_token_list **head, t_envp *env, int e_code)
 {
 	int		i;
 
@@ -36,7 +36,7 @@ int	tokenization(char *str, t_token_list **head, t_envp *env, int exit_code)
 		i++;
 	}
 	free(str);
-	return (token_check(head, env, exit_code));
+	return (token_check(head, env, e_code));
 }
 
 int	token_check(t_token_list **head, t_envp *env, int exit_code)

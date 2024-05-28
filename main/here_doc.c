@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 19:18:40 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/28 16:08:40 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:53:38 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	fake_here_doc(char *limiter)
 	free(line);
 }
 
-void	find_here_doc_and_process(t_token_list *head, t_info *info, t_envp *env)
+void	find_here_doc_process(t_token_list *head, t_info *info, t_envp *env)
 {
 	char	*tmp;
 	char	*filename;
@@ -113,7 +113,7 @@ int	here_doc_preprocessor(t_token_list *head, t_info *info, t_envp *env)
 	if (here_doc_child == FAIL)
 		return (ft_perror("fork"));
 	else if (here_doc_child == CHILD_PID)
-		find_here_doc_and_process(head, info, env);
+		find_here_doc_process(head, info, env);
 	signal(SIGINT, sigint_print_newline);
 	if (waitpid(here_doc_child, &status, 0) == FAIL)
 		return (ft_perror("waitpid"));

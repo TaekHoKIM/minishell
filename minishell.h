@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
+/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/28 15:52:53 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:54:30 by minyekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ enum	e_type
 	OUT_OPEN_D1,
 	OUT_OPEN_D2,
 	WRONG_TYPE,
-	// 개행 뒤에 온 모든 것을 하나의 토큰화 
 	END
 };
 
@@ -114,8 +113,7 @@ typedef struct s_info
 	int		**pipefd;
 }	t_info;
 
-// ------------------------------------taekhkim-------------------------------------------
-// main
+// -------------------------------taekhkim--------------------------------------
 
 // ft_str
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -154,7 +152,7 @@ char	*delete_q_helper(char *restr, char q, int *s);
 void	delete_q_helper1(char *str, char *restr, char q, int j);
 
 // tokenization
-int		tokenization(char *str, t_token_list **head, t_envp *env, int exit_code);
+int		tokenization(char *str, t_token_list **head, t_envp *env, int e_code);
 int		last_token_input(t_token_list **head);
 int		token_check(t_token_list **head, t_envp *env, int exit_code);
 
@@ -183,9 +181,9 @@ void	list_free_k(t_token_list **head, char *error_msg);
 char	*input_exit_code(char *str, int exit_code, int *i);
 void	input_exit_code_sub(char *str, char *exit_str, char *re_str, int i);
 
-// ------------------------------------taekhkim-------------------------------------------
+// -------------------------------taekhkim--------------------------------------
 
-// ------------------------------------minyekim-------------------------------------------
+// -------------------------------minyekim--------------------------------------
 
 // kim_min_yeong
 
@@ -211,7 +209,6 @@ char	*access_check(char **path, char *cmd);
 
 // child_process.c
 void	child_process(t_token_list *head, t_envp *envp, t_info *info, int i);
-
 
 // exec_process.c
 void	exec_process(t_token_list *head, t_envp **envp, t_info *info);
@@ -255,7 +252,7 @@ void	check_heredoc_env(char *str, int *flag);
 // here_doc.c
 int		here_doc(char *filename, char *limiter, int flag, t_envp *env);
 void	fake_here_doc(char *limiter);
-void	find_here_doc_and_process(t_token_list *head, t_info *info, t_envp *env);
+void	find_here_doc_process(t_token_list *head, t_info *info, t_envp *env);
 int		here_doc_preprocessor(t_token_list *head, t_info *info, t_envp *env);
 
 // minishell_utils.c
@@ -278,11 +275,11 @@ void	set_terminal_print(void);
 // wait.c
 void	child_process_wait(t_info *info);
 
-// ------------------------------------minyekim-------------------------------------------
+// -------------------------------minyekim--------------------------------------
 
 // built_in/change_dir_utils.c
 int		find_home_path(t_envp *envp, t_info *info);
-int 	home_not_set();
+int		home_not_set(void);
 
 // built_in/change_dir.c
 int		change_dir(t_token_list *head, t_envp *envp, t_info *info);
