@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:14:36 by minyekim          #+#    #+#             */
-/*   Updated: 2024/05/23 23:51:29 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:11:46 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ctrl_d_print_exit(void)
 	ft_putstr_fd("\033[1A", STDERR_FILENO);
 	ft_putstr_fd("\033[12C", STDERR_FILENO);
 	ft_putstr_fd("exit\n", STDERR_FILENO);
-	exit(EXIT_SUCCESS);
+	exit(g_exit_code);
 }
 
 void	info_terminal_signal_reset(t_info *info)

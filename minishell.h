@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minyekim <minyekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:48:25 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/25 20:40:39 by minyekim         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:52:53 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,12 +250,13 @@ void	here_doc_child_sigint(int sig);
 // here_doc_utils.c
 void	here_doc_file_unlink(int here_doc_cnt);
 int		ft_limiter_check(char *str1, char *str2);
+void	check_heredoc_env(char *str, int *flag);
 
 // here_doc.c
-int		here_doc(char *filename, char *limiter);
+int		here_doc(char *filename, char *limiter, int flag, t_envp *env);
 void	fake_here_doc(char *limiter);
-void	find_here_doc_and_process(t_token_list *head, t_info *info);
-int		here_doc_preprocessor(t_token_list *head, t_info *info);
+void	find_here_doc_and_process(t_token_list *head, t_info *info, t_envp *env);
+int		here_doc_preprocessor(t_token_list *head, t_info *info, t_envp *env);
 
 // minishell_utils.c
 void	*ft_malloc(size_t size, size_t cnt);

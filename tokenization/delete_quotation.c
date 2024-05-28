@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 15:33:53 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/26 12:25:38 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:02:55 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	token_change_qutation(t_token_list **head)
 		return (SUCCESS);
 	while (now != NULL)
 	{
-		if (now->type != END)
+		if (now->type != END && now->type != IN_OPEN_D2)
 		{
 			re_str = now->token;
 			re_str = delete_q(re_str);
