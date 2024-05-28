@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/27 16:05:38 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:30:45 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 int	token_typing(t_token_list **head)
 {
-	if (syntax_check_type(head) == FAIL)
-		return (FAIL);
+	if ((*head) != NULL)
+	{
+		if ((*head)->type == PIPE)
+			return (FAIL);
+		if (syntax_check_type(head) == FAIL)
+			return (FAIL);
+	}
 	check_cmd(head);
 	check_open_redi(head);
 	return (SUCCESS);
@@ -79,10 +84,6 @@ int	syntax_check_type(t_token_list **head)
 	t_token_list	*now;
 
 	now = (*head);
-	if (now == NULL)
-		return (SUCCESS);
-	if (now->type == PIPE)
-		return (FAIL);
 	pre_type = NONE;
 	now_type = NONE;
 	while (now != NULL)
