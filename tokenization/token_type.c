@@ -6,7 +6,7 @@
 /*   By: taekhkim <xorgh456@naver.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:39:48 by taekhkim          #+#    #+#             */
-/*   Updated: 2024/05/28 16:30:45 by taekhkim         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:30:58 by taekhkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	token_typing(t_token_list **head)
 		if ((*head)->type == PIPE)
 			return (FAIL);
 		if (syntax_check_type(head) == FAIL)
+		{
+			g_exit_code = 258;
 			return (FAIL);
+		}
 	}
 	check_cmd(head);
 	check_open_redi(head);
